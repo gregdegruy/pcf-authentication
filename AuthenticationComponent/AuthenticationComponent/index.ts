@@ -1,4 +1,7 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { FacepileBasicExample, IFacepileBasicExampleProps } from './Facepile';
 
 export class AuthenticationComponent
 	implements ComponentFramework.StandardControl<IInputs, IOutputs> {
@@ -10,6 +13,9 @@ export class AuthenticationComponent
 	private _container: HTMLDivElement;	
 	private _context: ComponentFramework.Context<IInputs>;	
 	private _refreshData: EventListenerOrEventListenerObject;
+	private props: IFacepileBasicExampleProps = {
+		numberFacesChanged: this.numberFacesChanged.bind(this),
+	}
 
 	constructor() { }
 
@@ -101,6 +107,21 @@ export class AuthenticationComponent
 		this.labelElement.innerHTML = context.parameters.sliderValue.formatted
 			? context.parameters.sliderValue.formatted
 			: "";
+
+		ReactDOM.render(
+			React.createElement(
+				FacepileBasicExample,
+				this.props
+			),
+			this._container
+		);
+	}
+
+	private numberFacesChanged(newValue: number) {
+		if (this.props.numberOfFaces !== newValue) {
+			this.props.numberOfFaces = newValue;
+			this._notifyOutputChanged();
+		}
 	}
 
 	public getOutputs(): IOutputs {
