@@ -1,6 +1,6 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 
-export class TSLinearInputComponent
+export class AuthenticationComponent
 	implements ComponentFramework.StandardControl<IInputs, IOutputs> {
 	
 	private _value: number;	
@@ -20,19 +20,42 @@ export class TSLinearInputComponent
 		container: HTMLDivElement
 	) {
 		this._context = context;		
+		this._container = document.createElement("div");
+		
 		this.buildSampleComponent(context, notifyOutputChanged);
+		this.buildInputForm(context);
+
 		container.appendChild(this._container);
 	}
 
+	public buildInputForm(context: ComponentFramework.Context<IInputs>): void {
+		var formElement = document.createElement("form");
+		var userNameInputElement = document.createElement("input");
+		userNameInputElement.setAttribute("type", "text");
+		userNameInputElement.setAttribute("min", "1");
+		userNameInputElement.setAttribute("max", "64");
+		var passwordInputElement = document.createElement("input");
+		passwordInputElement.setAttribute("type", "password");
+		passwordInputElement.setAttribute("min", "1");
+		passwordInputElement.setAttribute("max", "256");
+		var buttonElement = document.createElement("button");
+		buttonElement.setAttribute("type", "button");
+		var text = document.createTextNode("Submit");
+		buttonElement.appendChild(text);
+
+		formElement.appendChild(userNameInputElement);
+		formElement.appendChild(passwordInputElement);
+		formElement.appendChild(buttonElement);
+		this._container.appendChild(formElement);
+	}
+
 	public buildSampleComponent(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void): void {
-		this._container = document.createElement("div");
 		this._notifyOutputChanged = notifyOutputChanged;
 		this._refreshData = this.refreshData.bind(this);
 
 		this.inputElement = document.createElement("input");
 		this.inputElement.setAttribute("type", "range");
 		this.inputElement.addEventListener("input", this._refreshData);
-
 		this.inputElement.setAttribute("min", "1");
 		this.inputElement.setAttribute("max", "1000");
 		this.inputElement.setAttribute("class", "linearslider");
