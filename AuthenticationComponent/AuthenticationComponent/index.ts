@@ -1,7 +1,7 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { FacepileBasicExample, IFacepileBasicExampleProps } from './Facepile';
+import { AuthenticationForm } from './AuthenticationForm';
 
 export class AuthenticationComponent
 	implements ComponentFramework.StandardControl<IInputs, IOutputs> {
@@ -13,9 +13,6 @@ export class AuthenticationComponent
 	private _container: HTMLDivElement;	
 	private _context: ComponentFramework.Context<IInputs>;	
 	private _refreshData: EventListenerOrEventListenerObject;
-	private props: IFacepileBasicExampleProps = {
-		numberFacesChanged: this.numberFacesChanged.bind(this),
-	}
 
 	constructor() { }
 
@@ -29,30 +26,8 @@ export class AuthenticationComponent
 		this._container = document.createElement("div");
 		
 		this.buildSampleComponent(context, notifyOutputChanged);
-		this.buildInputForm(context);
 
 		container.appendChild(this._container);
-	}
-
-	public buildInputForm(context: ComponentFramework.Context<IInputs>): void {
-		var formElement = document.createElement("form");
-		var userNameInputElement = document.createElement("input");
-		userNameInputElement.setAttribute("type", "text");
-		userNameInputElement.setAttribute("min", "1");
-		userNameInputElement.setAttribute("max", "64");
-		var passwordInputElement = document.createElement("input");
-		passwordInputElement.setAttribute("type", "password");
-		passwordInputElement.setAttribute("min", "1");
-		passwordInputElement.setAttribute("max", "256");
-		var buttonElement = document.createElement("button");
-		buttonElement.setAttribute("type", "button");
-		var text = document.createTextNode("Submit");
-		buttonElement.appendChild(text);
-
-		formElement.appendChild(userNameInputElement);
-		formElement.appendChild(passwordInputElement);
-		formElement.appendChild(buttonElement);
-		this._container.appendChild(formElement);
 	}
 
 	public buildSampleComponent(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void): void {
@@ -110,18 +85,10 @@ export class AuthenticationComponent
 
 		ReactDOM.render(
 			React.createElement(
-				FacepileBasicExample,
-				this.props
+				AuthenticationForm
 			),
 			this._container
 		);
-	}
-
-	private numberFacesChanged(newValue: number) {
-		if (this.props.numberOfFaces !== newValue) {
-			this.props.numberOfFaces = newValue;
-			this._notifyOutputChanged();
-		}
 	}
 
 	public getOutputs(): IOutputs {
