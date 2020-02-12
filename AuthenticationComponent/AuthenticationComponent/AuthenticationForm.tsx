@@ -1,10 +1,8 @@
 import * as React from "react";
-import { 
-	DefaultButton, 
-	IStackProps,
-	Stack, 
-	TextField
-} from 'office-ui-fabric-react';
+
+import { Button, BaseButton, DefaultButton } from 'office-ui-fabric-react/lib/Button';
+import { Stack, IStackProps } from 'office-ui-fabric-react/lib/Stack';
+import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
 const columnProps: Partial<IStackProps> = {
 	tokens: { childrenGap: 15 },
@@ -47,7 +45,7 @@ export class AuthenticationForm extends React.Component<{}, ITextFieldControlled
 								/>
 								<DefaultButton 
 									text="Submit" 
-									onClick={this.buttonClick} 
+									onClick={this.buttonClicked} 
 									allowDisabledFocus 
 								/>
 							</Stack>
@@ -58,15 +56,14 @@ export class AuthenticationForm extends React.Component<{}, ITextFieldControlled
 		);
 	}
 
-	// onChange?: (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
 	private usernameOnChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
 		this.setState({ username: newValue || '' });
 	};
 	private passwordOnChange = (event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => {
 		this.setState({ password: newValue || '' });
 	};
-	private buttonClick(): void {
-		alert('Clicked with user' + this.state.username + 'and pas ' + this.state.password);
-	
+	private buttonClicked = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement | HTMLDivElement | BaseButton | Button | HTMLSpanElement, MouseEvent>) => {
+		alert('usr  is ' + this.state.username);
+		alert('pass is ' + this.state.password);
 	};
 }
