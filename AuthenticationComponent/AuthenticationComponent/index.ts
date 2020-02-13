@@ -1,7 +1,7 @@
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { AuthenticationForm } from './AuthenticationForm';
+import { App } from './App';
 
 export class AuthenticationComponent
 	implements ComponentFramework.StandardControl<IInputs, IOutputs> {
@@ -85,7 +85,7 @@ export class AuthenticationComponent
 
 		ReactDOM.render(
 			React.createElement(
-				AuthenticationForm
+				App
 			),
 			this._container
 		);

@@ -1,10 +1,12 @@
 import * as React from 'react';
 
-class App extends React.Component {
+import { AuthenticationForm } from './AuthenticationForm';
+
+export class App extends React.Component {
   render() {
     return (
       <>
-        <></>
+        <AuthenticationForm/>
       </>
     );
   }
