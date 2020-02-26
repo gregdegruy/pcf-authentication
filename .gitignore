@@ -1,2 +1,3 @@
-
-AuthenticationComponent/package-lock.json
+# package-lock.json
+# npm-debug.log
+env.json
