@@ -5,4 +5,6 @@
 
 # Power Apps Component Framework Authentication
 
+Run with `msbuild /t:restore` on Visual Studio cmd line.
+
 Uses [Office UI Fabric](https://developer.microsoft.com/en-us/fabric#/get-started) styles and controls.

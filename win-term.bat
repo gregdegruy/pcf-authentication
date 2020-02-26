@@ -1,9 +1,6 @@
-REM wt cmd /k cd \ ; split-pane -H cmd /k dir ; split-pane powershell -noexit -c echo hi
+wt -p "Visual Studio 2019" -d .
 
-IF /i "%COMPUTERNAME%"=="plusultra" wt -p "Visual Studio 2019" -d "c:\Users\grego\Documents\GitHub\greg\pcf-auth-temp"
-IF /i "%COMPUTERNAME%"=="gurrenlagann" wt -p "Visual Studio 2019" -d "d:\grego\GitHub\_greg\pcf-auth-temp"
-
-REM You need a setting for Visual Studio 20xx
+REM You need a setting for Visual Studio 20xx, example:
 REM {
 REM     "guid": "{7a2309ac-bece-4bf1-9a50-72ceaaedbe92}",            
 REM     "name": "Visual Studio 2019",

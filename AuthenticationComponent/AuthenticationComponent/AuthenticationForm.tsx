@@ -71,5 +71,7 @@ export class AuthenticationForm extends React.Component<{}, ITextFieldControlled
 	private buttonClicked = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement | HTMLDivElement | BaseButton | Button | HTMLSpanElement, MouseEvent>) => {
 		alert('usr  is ' + this.state.username);
 		alert('pass is ' + this.state.password);
+		
+		
 	};
 }
