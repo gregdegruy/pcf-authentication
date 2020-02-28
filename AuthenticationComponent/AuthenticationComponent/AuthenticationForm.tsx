@@ -32,6 +32,20 @@ export class AuthenticationForm extends React.Component<{}, ITextFieldControlled
 			response_type: "token",
 			loadUserInfo: false
 		});
+
+		this.userManager.events.addUserLoaded((user) => {
+            if (window.location.href.indexOf("signin-oidc") !== -1) {
+				console.log(user);
+                console.log("Authorization: " + user.token_type + ' ' + user.access_token);
+            }
+        });
+        this.userManager.events.addSilentRenewError((e) => {
+            console.log("silent renew error", e.message);
+        });
+
+        this.userManager.events.addAccessTokenExpired(() => {
+            console.log("token expired");
+        });
 	}
 
 	public render(): JSX.Element {
@@ -81,5 +95,12 @@ export class AuthenticationForm extends React.Component<{}, ITextFieldControlled
 	private buttonClicked = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement | HTMLDivElement | BaseButton | Button | HTMLSpanElement, MouseEvent>) => {
 		alert('usr  is ' + this.state.username);
 		alert('pass is ' + this.state.password);		
+
+		this.userManager.signinPopup({
+			popupWindowFeatures : 'location=no,toolbar=no,width=680,height=700'
+		})
+		.catch(function(error) {
+			console.error('error while logging in through the popup', error);
+		});
 	};
 }
