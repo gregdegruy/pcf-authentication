@@ -1,6 +1,8 @@
 {
+    "authority": "",
     "clientId": "",
     "redirectUris":[
         ""
-    ]
+    ],
+    "scope": ""
 }

@@ -1,8 +1,9 @@
-import * as React from "react";
-
 import { Button, BaseButton, PrimaryButton } from 'office-ui-fabric-react/lib/Button';
+import { UserManager, WebStorageStateStore, Log } from "oidc-client";
+import * as React from "react";
 import { Stack, IStackProps } from 'office-ui-fabric-react/lib/Stack';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
+import * as env from "../../env/env.json";
 
 const columnProps: Partial<IStackProps> = {
 	tokens: { childrenGap: 15 },
@@ -16,12 +17,21 @@ export interface ITextFieldControlledExampleState {
 
 export class AuthenticationForm extends React.Component<{}, ITextFieldControlledExampleState> {
 	
-	// beb0267-f598-47f4-9a86-a0bef54ecdeb,
-
 	public state: ITextFieldControlledExampleState = { username: '', password: '' };
 	
+	public userManager: UserManager;
+
 	constructor(props: any) {
-		super(props)
+		super(props);
+		
+		this.userManager = new UserManager({
+			authority: env.authority,
+			client_id: env.clientId,
+			redirect_uri: env.redirectUris[0],
+			scope: env.scope,
+			response_type: "token",
+			loadUserInfo: false
+		});
 	}
 
 	public render(): JSX.Element {
@@ -70,8 +80,6 @@ export class AuthenticationForm extends React.Component<{}, ITextFieldControlled
 
 	private buttonClicked = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement | HTMLDivElement | BaseButton | Button | HTMLSpanElement, MouseEvent>) => {
 		alert('usr  is ' + this.state.username);
-		alert('pass is ' + this.state.password);
-		
-		
+		alert('pass is ' + this.state.password);		
 	};
 }
