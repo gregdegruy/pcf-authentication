@@ -17,3 +17,5 @@ pac solution add-reference --path .\AuthenticationComponent
 msbuild /t:restore
 msbuild
 ```
+
+[Connect pac to CDS](https://docs.microsoft.com/en-us/powerapps/developer/component-framework/import-custom-controls#connecting-to-your-environment)
