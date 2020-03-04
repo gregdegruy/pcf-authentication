@@ -3,6 +3,12 @@ import { UserManager, WebStorageStateStore, Log } from "oidc-client";
 import * as env from "../../env/env.json";
 
 export class OpenIdManager {
+    // TODO: Signed cert to Seismic
+    //
+    // create JWT (name, email, azureactivedirectory)
+    // dynamics sends signed JWT to ISV
+    //
+    // isv provides and stores key to allow for API access with no expire time
     private static instance: OpenIdManager;
     public userManager: UserManager;
     public expirersAt: number;
@@ -44,8 +50,8 @@ export class OpenIdManager {
     }
     getToken(): void {
         this.userManager
-        // TODO: handle CORs
-        // .signinSilent()
+        // TODO: replace openid connect
+        // with isv API that gives non expiring api bearer token
         .signinPopup({
             popupWindowFeatures : 'location=no,toolbar=no,width=680,height=700'
         }).then((user) =>{

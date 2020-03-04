@@ -133,7 +133,9 @@ export class AuthenticationForm extends React.Component<{}, ITextFieldControlled
 					resolve(this.responseText);
 				}
 			});
-			xhr.open("GET", env.api + "/predictiveContent");
+			var predictiveContentId = "Flow"; // case matters!
+			var contextId = "optional";
+			xhr.open("GET", env.api + "/predictiveContent/" + predictiveContentId + '/' + contextId);
 			xhr.setRequestHeader("accept", "application/json");
 			xhr.setRequestHeader("authorization", "Bearer " + this.openId.token);
 			xhr.send(data);
