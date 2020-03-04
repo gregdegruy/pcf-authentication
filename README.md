@@ -8,3 +8,4 @@
 Run with `msbuild /t:restore` on Visual Studio cmd line.
 
 Uses [Office UI Fabric](https://developer.microsoft.com/en-us/fabric#/get-started) styles and controls.
+Uses [OpenId Client Settings](https://github.com/IdentityModel/oidc-client-js/wiki#other-optional-settings).
