@@ -3,11 +3,14 @@ import { UserManager, WebStorageStateStore, Log } from "oidc-client";
 import * as env from "../../env/env.json";
 
 export class OpenIdManager {
-    // TODO: Signed cert to Seismic
+    // TODO: Signed cert to ISV
     //
-    // create JWT (name, email, azureactivedirectory)
+    // create JWT
+    // id
+    // azureactivedirectoryobjectid - possible null
+    // internalemailaddress
+    //
     // dynamics sends signed JWT to ISV
-    //
     // isv provides and stores key to allow for API access with no expire time
     private static instance: OpenIdManager;
     public userManager: UserManager;
