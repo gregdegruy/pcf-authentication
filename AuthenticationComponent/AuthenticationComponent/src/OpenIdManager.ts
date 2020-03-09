@@ -1,6 +1,6 @@
 import { UserManager, WebStorageStateStore, Log } from "oidc-client";
 
-import * as env from "../../env/env.json";
+import * as env from "../../../env/env.json";
 
 export class OpenIdManager {
     // TODO: Signed cert to ISV

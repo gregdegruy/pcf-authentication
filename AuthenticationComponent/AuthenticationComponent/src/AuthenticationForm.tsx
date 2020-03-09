@@ -1,4 +1,5 @@
 import * as React from "react";
+import * as https from "https";
 import { Button, BaseButton, PrimaryButton } from 'office-ui-fabric-react/lib/Button';
 import { DetailsList, DetailsListLayoutMode, IColumn } from 'office-ui-fabric-react/lib/DetailsList';
 import { Stack } from 'office-ui-fabric-react/lib/Stack';
@@ -6,7 +7,7 @@ import { TextField } from 'office-ui-fabric-react/lib/TextField';
 
 import { OpenIdManager } from "./OpenIdManager";
 
-import * as env from "../../env/env.json";
+import * as env from "../../../env/env.json";
 
 export interface ITextFieldControlledExampleState {
 	username: string;
@@ -15,18 +16,17 @@ export interface ITextFieldControlledExampleState {
 }
 
 export interface IDetailsListBasicExampleItem {
-	title: string;
 	name: string;
-	systemType: string;
-	contextType: string;
+	repository: string;
+	scorePoints: string;
+	format: string;
+	applicationUrl: string;
 }
 
 export class AuthenticationForm extends React.Component<{}, ITextFieldControlledExampleState, IDetailsListBasicExampleItem> {
 	
-	public state: ITextFieldControlledExampleState = { username: "", password: "", items: [] };
-		
-	public readonly openId = new OpenIdManager().getInstance();	
-	
+	public state: ITextFieldControlledExampleState = { username: "", password: "", items: [] };		
+	public readonly openId = new OpenIdManager().getInstance();		
 	private _allItems: IDetailsListBasicExampleItem[];
 	private _columns: IColumn[];
 	
@@ -36,17 +36,19 @@ export class AuthenticationForm extends React.Component<{}, ITextFieldControlled
 		this._allItems = [];
 		for (let i = 0; i < 20; i++) {
 			this._allItems.push({
-				title: "title " + i,
 				name: "name " + i,
-				systemType: "systemType " + i,
-				contextType: "contextType " + i
+				repository: "repository " + i,
+				scorePoints: "scorePoints " + i,
+				format: "format " + i,
+				applicationUrl: "applicationUrl " + i
 			});
 		}		
 		this._columns = [
-			{ key: 'column1', name: 'Title', fieldName: 'title', minWidth: 100, maxWidth: 200, isResizable: true },
-			{ key: 'column2', name: 'Name', fieldName: 'name', minWidth: 100, maxWidth: 200, isResizable: true },
-			{ key: 'column3', name: 'System Type', fieldName: 'systemType', minWidth: 100, maxWidth: 200, isResizable: true },
-			{ key: 'column4', name: 'Context Type', fieldName: 'contextType', minWidth: 100, maxWidth: 200, isResizable: true }
+			{ key: "column1", name: "Name", fieldName: "name", minWidth: 100, maxWidth: 200, isResizable: true },
+			{ key: "column2", name: "Repository", fieldName: "repository", minWidth: 100, maxWidth: 200, isResizable: true },
+			{ key: "column3", name: "Score points", fieldName: "scorePoints", minWidth: 100, maxWidth: 200, isResizable: true },
+			{ key: "column4", name: "Format", fieldName: "format", minWidth: 100, maxWidth: 200, isResizable: true }			,
+			{ key: "column4", name: "Application Url", fieldName: "applicationUrl", minWidth: 100, maxWidth: 200, isResizable: true }
 		];
 		this.state = {
 			username: "",
@@ -54,7 +56,6 @@ export class AuthenticationForm extends React.Component<{}, ITextFieldControlled
 			items: this._allItems
 		};
 	}
-
 
 	public render(): JSX.Element {
 		return (			
@@ -123,38 +124,46 @@ export class AuthenticationForm extends React.Component<{}, ITextFieldControlled
 	};
 
 	private predictiveContent = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement | HTMLDivElement | BaseButton | Button | HTMLSpanElement, MouseEvent>) => {
-		let iPromiseIllDoTheThingOkay = new Promise((resolve, reject) => {
-			var data = null;
-			var xhr = new XMLHttpRequest();
-
-			xhr.addEventListener("readystatechange", function () {
-				if (this.readyState === this.DONE) {
-					console.log(this.responseText);
-					resolve(this.responseText);
-				}
-			});
-			var predictiveContentId = "Flow"; // case matters!
-			var contextId = "optional";
-			xhr.open("GET", env.api + "/predictiveContent/" + predictiveContentId + '/' + contextId);
-			xhr.setRequestHeader("accept", "application/json");
-			xhr.setRequestHeader("authorization", "Bearer " + this.openId.token);
-			xhr.send(data);
-		}) 		
-		iPromiseIllDoTheThingOkay.then((payload: any) => {
-			console.log("Yay! " + payload);
-			payload = JSON.parse(payload);
-			this._allItems = [];
-			for (let i = 0; i < 5; i++) {
-				console.log(JSON.stringify(payload[i]));
-				this._allItems.push({
-					title: "title " + payload[i].title,
-					name: "name " + payload[i].name,
-					systemType: "systemType " + payload[i].systemType,
-					contextType: "contextType " + payload[i].contextType
-				});
+		const predictiveContentId = "Flow"; // case matters!
+		const contextId = "optional";
+		let options = {
+			"method": "GET",
+			"hostname": env.api.toString(),
+			"path": "/predictiveContent/" + predictiveContentId + '/' + contextId,
+			"headers": {
+				"authorization": "Bearer " + this.openId.token
 			}
+		};		  
+		let req = https.request(options, function (response) {
+			var data = "";
+			response.on("data", function (chunk) {
+				data += chunk;
+			});		  
+			response.on("end", function () {								
+				let predictiveContent = JSON.parse(data);
+				// this._allItems = [];
+				for (let i = 0; i < predictiveContent.length; i++) {
+					console.log(predictiveContent[i].name);
+					console.log(predictiveContent[i].repository);
+					console.log(predictiveContent[i].score.points);
+					console.log(predictiveContent[i].format);
+					console.log(predictiveContent[i].applicationUrls[0].name); // handle empty
+					console.log(predictiveContent[i].applicationUrls[0].url);
+					// console.log(JSON.stringify(payload[i]));
+					// this._allItems.push({
+					// 	title: "title " + payload[i].title,
+					// 	name: "name " + payload[i].name,
+					// 	systemType: "systemType " + payload[i].systemType,
+					// 	contextType: "contextType " + payload[i].contextType
+					// });
+				}
 
-			this.setState({items: payload});	
-		});
+				// this.setState({items: payload});
+			});		  
+			response.on("error", function (error) {
+				console.error(error);
+			});
+		});		  
+		req.end();
 	};
 }
