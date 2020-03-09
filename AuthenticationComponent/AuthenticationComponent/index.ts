@@ -1,7 +1,7 @@
+import { App } from './App';
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { App } from './App';
 
 export class AuthenticationComponent
 	implements ComponentFramework.StandardControl<IInputs, IOutputs> {
@@ -16,12 +16,7 @@ export class AuthenticationComponent
 
 	constructor() { }
 
-	public init(
-		context: ComponentFramework.Context<IInputs>,
-		notifyOutputChanged: () => void,
-		state: ComponentFramework.Dictionary,
-		container: HTMLDivElement
-	) {
+	public init(context: ComponentFramework.Context<IInputs>, notifyOutputChanged: () => void, state: ComponentFramework.Dictionary, container: HTMLDivElement) {
 		this._context = context;		
 		this._container = document.createElement("div");
 		

@@ -59,7 +59,7 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
 						<div className="ms-Grid-col ms-sm6 ms-md8 ms-lg10">							
                             <PrimaryButton 
 									text="GET Predictive Content" 
-									onClick={this.predictiveContent}
+									onClick={this.getPredictiveContent}
 									allowDisabledFocus 
 									/>
                             <DetailsList
@@ -77,49 +77,54 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
 				</div>
 			</>
 		);
-	}
+    }
 
-	private predictiveContent = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement | HTMLDivElement | BaseButton | Button | HTMLSpanElement, MouseEvent>) => {
-		const predictiveContentId = "Flow"; // case matters!
-		const contextId = "optional";
-		let options = {
-			"method": "GET",
-			"hostname": env.api.toString(),
-			"path": "/predictiveContent/" + predictiveContentId + '/' + contextId,
-			"headers": {
-				"authorization": "Bearer " + this.openId.token
-			}
-		};		  
-		let req = https.request(options, function (response) {
-			var data = "";
-			response.on("data", function (chunk) {
-				data += chunk;
-			});		  
-			response.on("end", function () {								
-				let predictiveContent = JSON.parse(data);
-				// this._allItems = [];
-				for (let i = 0; i < predictiveContent.length; i++) {
-					console.log(predictiveContent[i].name);
-					console.log(predictiveContent[i].repository);
-					console.log(predictiveContent[i].score.points);
-					console.log(predictiveContent[i].format);
-					console.log(predictiveContent[i].applicationUrls[0].name); // handle empty
-					console.log(predictiveContent[i].applicationUrls[0].url);
-					// console.log(JSON.stringify(payload[i]));
-					// this._allItems.push({
-					// 	title: "title " + payload[i].title,
-					// 	name: "name " + payload[i].name,
-					// 	systemType: "systemType " + payload[i].systemType,
-					// 	contextType: "contextType " + payload[i].contextType
-					// });
-				}
-
-				// this.setState({items: payload});
-			});		  
-			response.on("error", function (error) {
-				console.error(error);
-			});
-		});		  
-		req.end();
+	private getPredictiveContent(event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement | HTMLDivElement | BaseButton | Button | HTMLSpanElement, MouseEvent>): void {
+        const predictiveContentId = "Flow"; // case matters!
+        const contextId = "optional";
+        let options = {
+            "method": "GET",
+            "hostname": env.api.toString(),
+            "path": "/predictiveContent/" + predictiveContentId + '/' + contextId,
+            "headers": {
+                "authorization": "Bearer " + this.openId.token
+            }
+        };
+        let contentPromise = new Promise((resolve, reject) => {                          		
+            var predictiveContent: any[] = [];  
+            let req = https.request(options, function (response) {
+                var data = "";
+                response.on("data", function (chunk) {
+                    data += chunk;
+                });		  
+                response.on("end", function () {								
+                    let formattedData = JSON.parse(data);
+                    for (let i = 0; i < formattedData.length; i++) {
+                        console.log(formattedData[i].name);
+                        console.log(formattedData[i].repository);
+                        console.log(formattedData[i].score.points);
+                        console.log(formattedData[i].format);
+                        console.log(formattedData[i].applicationUrls[0].name); // handle empty
+                        console.log(formattedData[i].applicationUrls[0].url);
+                        predictiveContent.push({
+                            name: formattedData[i].name,
+                            repository: formattedData[i].repository,
+                            scorePoints: formattedData[i].score.points,
+                            format: formattedData[i].format,
+                            applicationUrl: formattedData[i].applicationUrls[0].name
+                        });
+                    }
+                    resolve(predictiveContent);
+                });		  
+                response.on("error", function (error) {
+                    console.error(error);
+                    reject();
+                });
+            });		  
+            req.end();
+        }); 		
+        contentPromise.then((payload: any) => {
+            this.setState({items: payload});
+        });
 	};
 }
