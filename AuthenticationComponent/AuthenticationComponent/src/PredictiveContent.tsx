@@ -23,18 +23,23 @@ export interface IDetailsListBasicExampleItem {
 	name: string;
 	repository: string;
 	scorePoints: string;
-	format: string;
+	format: any;
     applicationUrl: any;
-    icon: any;
 }
+
+const fileIcons: any = {
+     "docx": "WordDocument" ,
+     "pdf": "PDF" ,
+     "pptx": "PowerPointDocument" ,
+     "xls": "WordDocument"
+};
 
 export class PredictiveContent extends React.Component<{}, ITextFieldControlledExampleState, IDetailsListBasicExampleItem> {
 	
 	public state: ITextFieldControlledExampleState = { items: [] };		
 	public readonly openId = new OpenIdManager().getInstance();		
 	private _allItems: IDetailsListBasicExampleItem[];
-	private _columns: IColumn[];
-    public NavigateExternalInlineIcon = () => <Icon iconName="NavigateExternalInline" className="ms-IconExample" />;
+    private _columns: IColumn[];        
 	
 	constructor(props: any) {
 		super(props);				
@@ -45,9 +50,8 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
 				name: "name " + i,
 				repository: "repository " + i,
 				scorePoints: "scorePoints " + i,
-				format: "format " + i,
-                applicationUrl: "applicationUrl " + i,
-                icon: <Icon iconName={'PDF'} />
+				format: <div><Icon iconName={'PDF'} /> {"format " + i}</div>,
+                applicationUrl: "applicationUrl " + i
 			});
 		}		
 		this._columns = [
@@ -56,7 +60,6 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
 			{ key: "column3", name: "Score points", fieldName: "scorePoints", minWidth: 100, maxWidth: 200, isResizable: true },
 			{ key: "column4", name: "Format", fieldName: "format", minWidth: 100, maxWidth: 200, isResizable: true }			,
             { key: "column5", name: "Application Url", fieldName: "applicationUrl", minWidth: 100, maxWidth: 200, isResizable: true },
-            { key: "column6", name: "Icon", fieldName: "icon", minWidth: 100, maxWidth: 200, isResizable: true }
 		];
 		this.state = {
 			items: this._allItems
@@ -112,17 +115,16 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
                 response.on("end", function () {								
                     let formattedData = JSON.parse(data);
                     for (let i = 0; i < formattedData.length; i++) {
-                        console.log(formattedData[i].name);
-                        console.log(formattedData[i].repository);
-                        console.log(formattedData[i].score.points);
-                        console.log(formattedData[i].format);
                         console.log(formattedData[i].applicationUrls[0].name); // handle empty
-                        console.log(formattedData[i].applicationUrls[0].url);
                         predictiveContent.push({
                             name: formattedData[i].name,
                             repository: formattedData[i].repository,
                             scorePoints: formattedData[i].score.points,
-                            format: formattedData[i].format,
+                            format: 
+                                <div>
+                                    <Icon iconName={fileIcons[formattedData[i].format.toLowerCase()]} />&nbsp; 
+                                    {formattedData[i].format}
+                                </div>,
                             applicationUrl:  
                             <Link
                                 key={1}
@@ -130,9 +132,8 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
                                     window.open(formattedData[i].applicationUrls[0].url, "MyWindow", "width=1000,height=800"); 
                                 }}
                             >
-                                {formattedData[i].applicationUrls[0].name}
+                                {formattedData[i].applicationUrls[0].name} <Icon iconName={'NavigateExternalInline'} />
                             </Link>,
-                            icon: <Icon iconName={'PowerPointDocument'} />
                         });
                     }
                     resolve(predictiveContent);
