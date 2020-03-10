@@ -1,7 +1,10 @@
 import * as React from "react";
 import * as https from "https";
+import { initializeIcons } from '@uifabric/icons';
 import { Button, BaseButton, PrimaryButton } from 'office-ui-fabric-react/lib/Button';
 import { DetailsList, DetailsListLayoutMode, IColumn } from 'office-ui-fabric-react/lib/DetailsList';
+import { Icon } from 'office-ui-fabric-react/lib/Icon';
+
 
 import { OpenIdManager } from "./OpenIdManager";
 
@@ -25,10 +28,13 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
 	public readonly openId = new OpenIdManager().getInstance();		
 	private _allItems: IDetailsListBasicExampleItem[];
 	private _columns: IColumn[];
+    public PowerPointDocumentIcon = () => <Icon iconName="PowerPointDocument" className="ms-IconExample" />;
+    public PDFIcon = () => <Icon iconName="PDF" className="ms-IconExample" />;
+    public NavigateExternalInlineIcon = () => <Icon iconName="NavigateExternalInline" className="ms-IconExample" />;
 	
 	constructor(props: any) {
 		super(props);				
-		
+		initializeIcons();
 		this._allItems = [];
 		for (let i = 0; i < 20; i++) {
 			this._allItems.push({
@@ -44,19 +50,20 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
 			{ key: "column2", name: "Repository", fieldName: "repository", minWidth: 100, maxWidth: 200, isResizable: true },
 			{ key: "column3", name: "Score points", fieldName: "scorePoints", minWidth: 100, maxWidth: 200, isResizable: true },
 			{ key: "column4", name: "Format", fieldName: "format", minWidth: 100, maxWidth: 200, isResizable: true }			,
-			{ key: "column4", name: "Application Url", fieldName: "applicationUrl", minWidth: 100, maxWidth: 200, isResizable: true }
+			{ key: "column5", name: "Application Url", fieldName: "applicationUrl", minWidth: 100, maxWidth: 200, isResizable: true }
 		];
 		this.state = {
 			items: this._allItems
 		};
 	}
-
+    
 	public render(): JSX.Element {
 		return (			
 			<>
 				<div className="ms-Grid">				
 					<div className="ms-Grid-row">
 						<div className="ms-Grid-col ms-sm6 ms-md8 ms-lg10">							
+                            <this.PowerPointDocumentIcon />
                             <PrimaryButton 
 									text="GET Predictive Content" 
 									onClick={this.getPredictiveContent}
@@ -87,7 +94,7 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
             "hostname": env.api.toString(),
             "path": "/predictiveContent/" + predictiveContentId + '/' + contextId,
             "headers": {
-                "authorization": "Bearer " + this.openId.token
+                "authorization": "Bearer " + this.openId.getToken()
             }
         };
         let contentPromise = new Promise((resolve, reject) => {                          		

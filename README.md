@@ -10,12 +10,17 @@ Run with `msbuild /t:restore` on Visual Studio cmd line. [Import the into the CD
 Uses [Office UI Fabric](https://developer.microsoft.com/en-us/fabric#/get-started) styles and controls.
 Uses [OpenId Client Settings](https://github.com/IdentityModel/oidc-client-js/wiki#other-optional-settings).
 
-In the component folder at the package.json level.
+Authenticate using `pac auth`. In the component folder at the package.json level.
 ```
 pac solution init --publisher-name Greg --publisher-prefix grdegr
 pac solution add-reference --path .\AuthenticationComponent
 msbuild /t:restore
 msbuild
+```
+
+Push Component to CDS.
+```
+pac pcf push -pp grdegr -v minimal
 ```
 
 [Connect pac to CDS](https://docs.microsoft.com/en-us/powerapps/developer/component-framework/import-custom-controls#connecting-to-your-environment)

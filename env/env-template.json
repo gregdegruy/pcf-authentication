@@ -1,6 +1,7 @@
 {
     "api": "",
     "authority": "",
+    "cdsEnvironment": "",
     "clientId": "",
     "redirectUris":[
         ""
