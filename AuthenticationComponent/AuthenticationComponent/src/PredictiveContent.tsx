@@ -86,7 +86,7 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
 		);
     }
 
-	private getPredictiveContent(event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement | HTMLDivElement | BaseButton | Button | HTMLSpanElement, MouseEvent>): void {
+	private getPredictiveContent = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement | HTMLDivElement | BaseButton | Button | HTMLSpanElement, MouseEvent>) => {
         const predictiveContentId = "Flow"; // case matters!
         const contextId = "optional";
         let options = {
@@ -94,7 +94,7 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
             "hostname": env.api.toString(),
             "path": "/predictiveContent/" + predictiveContentId + '/' + contextId,
             "headers": {
-                "authorization": "Bearer " + this.openId.getToken()
+                "authorization": "Bearer " + this.openId.bearerToken
             }
         };
         let contentPromise = new Promise((resolve, reject) => {                          		
