@@ -67,7 +67,7 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
                             <PrimaryButton 
 									text="GET Predictive Content" 
 									onClick={this.getPredictiveContent}
-									allowDisabledFocus 
+                                    allowDisabledFocus 
 									/>
                             <DetailsList
 								items={this.state.items}

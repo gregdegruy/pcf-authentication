@@ -40,16 +40,19 @@ export class AuthenticationForm extends React.Component<{}, ITextFieldControlled
 									type="text"
 									value={this.state.username}
 									onChange={this.usernameOnChange}
+									disabled={this.openId.authenticated}
 									/>
 								<TextField 
 									label="Password"
 									type="password" 
 									value={this.state.password}
 									onChange={this.passwordOnChange}
+									disabled={this.openId.authenticated}
 									/>
 								<PrimaryButton 
-									text="Sign In" 
+									text={this.openId.authenticated ? "Sign In" : "Sign Out"} 
 									onClick={this.buttonClicked}
+									disabled={this.openId.authenticated}
 									allowDisabledFocus 
 									/>
 							</Stack>
