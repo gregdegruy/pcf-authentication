@@ -1,11 +1,16 @@
 import * as React from "react";
 import * as https from "https";
 import { initializeIcons } from '@uifabric/icons';
-import { Button, BaseButton, PrimaryButton } from 'office-ui-fabric-react/lib/Button';
-import { DetailsList, DetailsListLayoutMode, IColumn } from 'office-ui-fabric-react/lib/DetailsList';
-import { Icon } from 'office-ui-fabric-react/lib/Icon';
-
-
+import { 
+    Button, 
+    BaseButton, 
+    DetailsList, 
+    DetailsListLayoutMode, 
+    IColumn, 
+    Icon,
+    Link,
+    PrimaryButton,
+} from 'office-ui-fabric-react';
 import { OpenIdManager } from "./OpenIdManager";
 
 import * as env from "../../../env/env.json";
@@ -19,7 +24,8 @@ export interface IDetailsListBasicExampleItem {
 	repository: string;
 	scorePoints: string;
 	format: string;
-	applicationUrl: string;
+    applicationUrl: any;
+    icon: any;
 }
 
 export class PredictiveContent extends React.Component<{}, ITextFieldControlledExampleState, IDetailsListBasicExampleItem> {
@@ -28,8 +34,6 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
 	public readonly openId = new OpenIdManager().getInstance();		
 	private _allItems: IDetailsListBasicExampleItem[];
 	private _columns: IColumn[];
-    public PowerPointDocumentIcon = () => <Icon iconName="PowerPointDocument" className="ms-IconExample" />;
-    public PDFIcon = () => <Icon iconName="PDF" className="ms-IconExample" />;
     public NavigateExternalInlineIcon = () => <Icon iconName="NavigateExternalInline" className="ms-IconExample" />;
 	
 	constructor(props: any) {
@@ -42,7 +46,8 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
 				repository: "repository " + i,
 				scorePoints: "scorePoints " + i,
 				format: "format " + i,
-				applicationUrl: "applicationUrl " + i
+                applicationUrl: "applicationUrl " + i,
+                icon: <Icon iconName={'PDF'} />
 			});
 		}		
 		this._columns = [
@@ -50,12 +55,13 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
 			{ key: "column2", name: "Repository", fieldName: "repository", minWidth: 100, maxWidth: 200, isResizable: true },
 			{ key: "column3", name: "Score points", fieldName: "scorePoints", minWidth: 100, maxWidth: 200, isResizable: true },
 			{ key: "column4", name: "Format", fieldName: "format", minWidth: 100, maxWidth: 200, isResizable: true }			,
-			{ key: "column5", name: "Application Url", fieldName: "applicationUrl", minWidth: 100, maxWidth: 200, isResizable: true }
+            { key: "column5", name: "Application Url", fieldName: "applicationUrl", minWidth: 100, maxWidth: 200, isResizable: true },
+            { key: "column6", name: "Icon", fieldName: "icon", minWidth: 100, maxWidth: 200, isResizable: true }
 		];
 		this.state = {
 			items: this._allItems
 		};
-	}
+    }        
     
 	public render(): JSX.Element {
 		return (			
@@ -63,7 +69,6 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
 				<div className="ms-Grid">				
 					<div className="ms-Grid-row">
 						<div className="ms-Grid-col ms-sm6 ms-md8 ms-lg10">							
-                            <this.PowerPointDocumentIcon />
                             <PrimaryButton 
 									text="GET Predictive Content" 
 									onClick={this.getPredictiveContent}
@@ -118,7 +123,16 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
                             repository: formattedData[i].repository,
                             scorePoints: formattedData[i].score.points,
                             format: formattedData[i].format,
-                            applicationUrl: formattedData[i].applicationUrls[0].name
+                            applicationUrl:  
+                            <Link
+                                key={1}
+                                onClick={() => { 
+                                    window.open(formattedData[i].applicationUrls[0].url, "MyWindow", "width=1000,height=800"); 
+                                }}
+                            >
+                                {formattedData[i].applicationUrls[0].name}
+                            </Link>,
+                            icon: <Icon iconName={'PowerPointDocument'} />
                         });
                     }
                     resolve(predictiveContent);
