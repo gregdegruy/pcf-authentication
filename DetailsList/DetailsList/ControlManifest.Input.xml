@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="MrUniverse" constructor="AuthenticationComponent" version="0.0.1" display-name-key="AuthenticationComponent" description-key="Authenticaties using a servicve" control-type="standard">   
+  <control namespace="GregUniverse" constructor="AuthenticationComponent" version="0.0.1" display-name-key="AuthenticationComponent" description-key="Authenticaties using a servicve" control-type="standard">   
       <type-group name="numbers">
         <type>Whole.None</type>
         <type>Currency</type>

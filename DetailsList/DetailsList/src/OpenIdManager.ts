@@ -1,15 +1,24 @@
 import * as https from "https";
-import { UserManager, WebStorageStateStore, Log } from "oidc-client";
+import { UserManager } from "oidc-client";
 
 import * as env from "../../../env/env.json";
 
 export class OpenIdManager {
-    // TODO: Signed cert to ISV
+    // TODO: Send sign cert to ISV
     //
-    // create JWT
+    //
+    // something running on dynamics server side to BASE 64 encode and SSA sign the thing
+    //
+    // create JWT (sign it on server)
+    // have plugin fire and sign this
+    // or use azure functions
+    //
+    // use TS to get bearer token for user?
+    //
     // id
-    // azureactivedirectoryobjectid - possible null
+    // azureactivedirectoryobjectid - possiblly null
     // internalemailaddress
+    // 
     //
     // dynamics sends signed JWT to ISV
     // isv provides and stores key to allow for API access with no expire time

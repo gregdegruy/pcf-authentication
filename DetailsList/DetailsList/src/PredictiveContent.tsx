@@ -73,10 +73,10 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
 					<div className="ms-Grid-row">
 						<div className="ms-Grid-col ms-sm6 ms-md8 ms-lg10">							
                             <PrimaryButton 
-									text="GET Predictive Content" 
-									onClick={this.getPredictiveContent}
-                                    allowDisabledFocus 
-									/>
+                                text="GET Predictive Content" 
+                                onClick={this.getPredictiveContent}
+                                allowDisabledFocus 
+                                />
                             <DetailsList
 								items={this.state.items}
 								columns={this._columns}
@@ -132,7 +132,7 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
                                     window.open(formattedData[i].applicationUrls[0].url, "MyWindow", "width=1000,height=800"); 
                                 }}
                             >
-                                {formattedData[i].applicationUrls[0].name} <Icon iconName={'NavigateExternalInline'} />
+                            {formattedData[i].applicationUrls[0].name} <Icon iconName={'NavigateExternalInline'} />
                             </Link>,
                         });
                     }

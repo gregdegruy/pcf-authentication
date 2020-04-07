@@ -1,4 +1,4 @@
-.MrUniverse\.AuthenticationComponent input[type=range].linearslider {
+.GregUniverse\.AuthenticationComponent input[type=range].linearslider {
   margin: 1px 0;
   background: transparent;
   -webkit-appearance: none;
@@ -8,17 +8,17 @@
   -webkit-tap-highlight-color: transparent
 }
 
-.MrUniverse\.AuthenticationComponent input[type=range].linearslider:focus {
+.GregUniverse\.AuthenticationComponent input[type=range].linearslider:focus {
   outline: none;
 }
 
-.MrUniverse\.AuthenticationComponent input[type=range].linearslider::-webkit-slider-runnable-track {
+.GregUniverse\.AuthenticationComponent input[type=range].linearslider::-webkit-slider-runnable-track {
   background: #666;
   height: 2px;
   cursor: pointer
 }
 
-.MrUniverse\.AuthenticationComponent input[type=range].linearslider::-webkit-slider-thumb {
+.GregUniverse\.AuthenticationComponent input[type=range].linearslider::-webkit-slider-thumb {
   background: #666;
   border: 0 solid #f00;
   height: 24px;
@@ -30,13 +30,13 @@
   margin-top: -12px
 }
 
-.MrUniverse\.AuthenticationComponent input[type=range].linearslider::-moz-range-track {
+.GregUniverse\.AuthenticationComponent input[type=range].linearslider::-moz-range-track {
   background: #666;
   height: 2px;
   cursor: pointer
 }
 
-.MrUniverse\.AuthenticationComponent input[type=range].linearslider::-moz-range-thumb {
+.GregUniverse\.AuthenticationComponent input[type=range].linearslider::-moz-range-thumb {
   background: #666;
   border: 0 solid #f00;
   height: 24px;
@@ -48,13 +48,13 @@
   margin-top: -12px
 }
 
-.MrUniverse\.AuthenticationComponent input[type=range].linearslider::-ms-track {
+.GregUniverse\.AuthenticationComponent input[type=range].linearslider::-ms-track {
   background: #666;
   height: 2px;
   cursor: pointer
 }
 
-.MrUniverse\.AuthenticationComponent input[type=range].linearslider::-ms-thumb {
+.GregUniverse\.AuthenticationComponent input[type=range].linearslider::-ms-thumb {
   background: #666;
   border: 0 solid #f00;
   height: 24px;

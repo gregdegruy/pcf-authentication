@@ -11,3 +11,5 @@ node_modules
 env.json
 npm-debug.log
 package-lock.json
+CDS/CDS.CustomControl.Encryption/.vs/CDS.CustomControl.Encryption/DesignTimeBuild/.dtbcache.v2
+CDS/CDS.CustomControl.Encryption/.vs/CDS.CustomControl.Encryption/v16/.suo

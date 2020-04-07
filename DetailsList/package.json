@@ -1,5 +1,5 @@
 {
-  "name": "isv-pcf-project",
+  "name": "detaillist-pcf-project",
   "version": "1.0.0",
   "description": "Project containing your PowerApps Component Framework (PCF) control.",
   "scripts": {
@@ -21,3 +21,6 @@
     "pcf-start": "^1"
   }
 }
+
+
+npm i @uifabric/fluent-theme --save && npm i office-ui-fabric-react --save && npm i react --save
