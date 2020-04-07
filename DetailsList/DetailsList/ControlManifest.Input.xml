@@ -10,7 +10,6 @@
       <property name="sliderValue" display-name-key="sliderValue_Display_Key" description-key="sliderValue_Desc_Key" of-type-group="numbers" usage="bound" required="true" />
     <resources>
       <code path="index.ts" order="1"/>
-      <css path="css/AuthenticationComponent.css" order="1" />
       <!-- UNCOMMENT TO ADD MORE RESOURCES
       <resx path="strings/AuthenticationComponent.1033.resx" version="1.0.0" />
       -->

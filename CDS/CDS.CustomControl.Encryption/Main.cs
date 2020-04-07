@@ -3,13 +3,13 @@ using Microsoft.Xrm.Sdk;
 
 namespace CDS.CustomControl.Encryption
 {
-    public class EventTrigger : IPlugin
+    public class Main : IPlugin
     {
         /// <summary>
         /// 
-        /// Captures completed Task trigger and sends data to SpurGo
+        /// Creates a signed SHA user token on load of a PCF control
         /// 
-        /// Trigger: Completed a task eg. Create an Account
+        /// Trigger: On load of PCF component
         /// Stage: Pre
         /// Method: Synchronous
         /// Filter Attributes: none
@@ -32,7 +32,7 @@ namespace CDS.CustomControl.Encryption
             tracingService.Trace("Event Trigger running...");
 
             Provider externalProvider = new Provider(context, organizationService, tracingService);
-            Provider.taskNotifyEvent();
+            externalProvider.NotifyEvent();
         }
     }
 }

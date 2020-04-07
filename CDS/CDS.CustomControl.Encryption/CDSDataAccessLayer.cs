@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 
 namespace CDS.CustomControl.Encryption
 {
@@ -13,7 +12,6 @@ namespace CDS.CustomControl.Encryption
 
         private AdvancedFind _advancedFind = new AdvancedFind();
         private Dictionary<string, dynamic> cdsSystemUserData;
-        private HttpClient client = new HttpClient { BaseAddress = new Uri("https://org.api.dynamics.com/") };
 
         public CDSDataAccessLayer(IExecutionContext executionContext, 
             IOrganizationService organizationService, ITracingService tracingService)

@@ -21,6 +21,3 @@
     "pcf-start": "^1"
   }
 }
-
-
-npm i @uifabric/fluent-theme --save && npm i office-ui-fabric-react --save && npm i react --save

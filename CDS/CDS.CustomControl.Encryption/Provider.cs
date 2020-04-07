@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CDS.CustomControl.Encryption
 {
-    internal class Provider
+    internal class Provider : IProvider
     {
         private IExecutionContext passThroughOnlyExecutionContext;
         private IOrganizationService passThroughOnlyOrganizationService;
@@ -21,7 +21,7 @@ namespace CDS.CustomControl.Encryption
             passThroughOnlyTracingService = logs;
         }
 
-        public async void SpurGoTaskNotifyEvent()
+        public async void NotifyEvent()
         {
             passThroughOnlyTracingService.Trace("In SpurGoTaskNotifyEvent");
 
@@ -60,5 +60,6 @@ namespace CDS.CustomControl.Encryption
             response = await httpClient.PostAsync("api/cds/authentication/token", formUrlEncodedContent);
             response.EnsureSuccessStatusCode();
         }        
+    
     }
 }
