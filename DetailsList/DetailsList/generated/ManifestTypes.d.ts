@@ -4,8 +4,8 @@
 
 // Define IInputs and IOutputs Type. They should match with ControlManifest.
 export interface IInputs {
-    sliderValue: ComponentFramework.PropertyTypes.NumberProperty;
+    sampleProperty: ComponentFramework.PropertyTypes.StringProperty;
 }
 export interface IOutputs {
-    sliderValue?: number;
+    sampleProperty?: string;
 }

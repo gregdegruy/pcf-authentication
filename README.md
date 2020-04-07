@@ -25,7 +25,6 @@ pac pcf push -pp grdegr -v minimal
 
 Creates a `prefix_Namespace.ComponentName` control if changes are made to any of it's resource. The WebResource containing all of these PCF resources are located in `prefix_Namespace.ComponentName/bundle.js`.
 
-If you face this `Error: WebResource content size is too big.`.
-
+If you face this `Error: WebResource content size is too big.` can use temporarily use [this hack](https://parthimscrm.wordpress.com/2016/05/10/webresource-content-size-is-too-big-microsoft-dynamics-crm-error-code-0x8004f114/) that involves increasing the size limit of email attachments from the 5120 KB to something larger.
 
 [Connect pac to CDS](https://docs.microsoft.com/en-us/powerapps/developer/component-framework/import-custom-controls#connecting-to-your-environment)

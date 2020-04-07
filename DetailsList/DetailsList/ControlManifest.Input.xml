@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
   <control namespace="GregUniverse" constructor="AuthenticationComponent" version="0.0.1" display-name-key="AuthenticationComponent" description-key="Authenticaties using a servicve" control-type="standard">   
-      <type-group name="numbers">
-        <type>Whole.None</type>
-        <type>Currency</type>
-        <type>FP</type>
-        <type>Decimal</type>
-      </type-group>
-      <property name="sliderValue" display-name-key="sliderValue_Display_Key" description-key="sliderValue_Desc_Key" of-type-group="numbers" usage="bound" required="true" />
+    <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
     <resources>
       <code path="index.ts" order="1"/>
       <!-- UNCOMMENT TO ADD MORE RESOURCES

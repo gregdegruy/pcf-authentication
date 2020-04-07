@@ -51,54 +51,7 @@ export class OpenIdManager {
             console.log("token expired");
         });
 
-        this.userManager.signinPopupCallback();
-
-        let cdsUserPromise = new Promise((resolve, reject) => {   
-            var systemUserFetchXml = "";
-            systemUserFetchXml = systemUserFetchXml.concat(
-            '<fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="true" no-lock="false">',
-                '<entity name="systemuser">',
-                  '<attribute name="systemuserid" />',
-                  '<attribute name="internalemailaddress" />',
-                '</entity>',
-              '</fetch>'
-            );
-            let options = {
-                "method": "GET",
-                "hostname": env.cdsEnvironment + "/api/data/v9.0",
-                "path": "/systemusers?fetchXml=" + encodeURI(systemUserFetchXml)
-            };
-            let req = https.request(options, function(response) {
-                var data = "";
-                response.on("data", function(chunk) {
-                    data += chunk;
-                });		  
-                response.on("end", function() {	
-                    var formattedData = {};	
-                    try {
-                        formattedData = JSON.parse(data);
-                    } catch(error) {
-                        reject();
-                    }
-                    resolve(formattedData);
-                });		  
-                response.on("error", function() {              
-                    reject();
-                });
-            });		  
-            req.end();
-        });
-
-        cdsUserPromise.then((payload: any) => {
-            alert("System user " + JSON.stringify(payload));
-            console.log("System user " + JSON.stringify(payload));
-        }).catch((error) => {
-            var user = {
-                "systemuserid": "ab77f44e-8153-ea11-a819-000d3a579cc1",
-                "internalemailaddress": "michealscott@fakedomain.onmicrosoft.com"
-            };
-            console.log("GET ERROR System user: " + JSON.stringify(user));
-        });        
+        this.userManager.signinPopupCallback();            
 
         if (document.cookie.split(';').filter((item) => item.trim().startsWith('commonDataServiceToken=')).length) {
             var cookie = document.cookie.replace(/(?:(?:^|.*;\s*)commonDataServiceToken\s*\=\s*([^;]*).*$)|^.*$/, "$1");            
