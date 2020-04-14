@@ -462,7 +462,7 @@ namespace CDS.CustomControl.Encryption.Test.Authentication
             where TService : class
         {
             private TProxy _proxy;
-
+           
             /// <param name="proxy">Proxy that will be used to authenticate the user</param>
             public AutoRefreshSecurityToken(TProxy proxy)
             {
@@ -504,22 +504,22 @@ namespace CDS.CustomControl.Encryption.Test.Authentication
             /// </summary>
             public void RenewTokenIfRequired()
             {
-                //if (null != this._proxy.SecurityTokenResponse &&
-                //    DateTime.UtcNow.AddMinutes(15) >= this._proxy.SecurityTokenResponse.Response.Lifetime.Expires)
-                //{
-                //    try
-                //    {
-                //        this._proxy.Authenticate();
-                //    }
-                //    catch (CommunicationException)
-                //    {
-                //        if (null == this._proxy.SecurityTokenResponse ||
-                //            DateTime.UtcNow >= this._proxy.SecurityTokenResponse.Response.Lifetime.Expires)
-                //        {
-                //            throw;
-                //        }
-                //    }
-                //}
+                if (null != this._proxy.SecurityTokenResponse &&
+                    DateTime.UtcNow.AddMinutes(15) >= this._proxy.SecurityTokenResponse.Response.Lifetime.Expires)
+                {
+                    try
+                    {
+                        this._proxy.Authenticate();
+                    }
+                    catch (CommunicationException)
+                    {
+                        if (null == this._proxy.SecurityTokenResponse ||
+                            DateTime.UtcNow >= this._proxy.SecurityTokenResponse.Response.Lifetime.Expires)
+                        {
+                            throw;
+                        }
+                    }
+                }
             }
         }
     }

@@ -6,7 +6,7 @@ namespace CDS.CustomControl.Encryption.Test.Authentication
     internal abstract class ServerConfiguration
     {
         public String ServerAddress;
-        public String OrganizationName;
+        public String OrganizationName;        
         public Uri HomeRealmUri;
         private ClientCredentials _credentials;
         public ClientCredentials Credentials
@@ -25,8 +25,8 @@ namespace CDS.CustomControl.Encryption.Test.Authentication
             get { return _credentials.UserName.Password; }
             set { _credentials.UserName.Password = value; }
         }
-        public String UserPrincipalName;
-        internal Int16 AuthFailureCount = 0;
+        public String UserPrincipalName;        
+        internal Int16 AuthFailureCount = 0; 
 
         public ServerConfiguration()
         {

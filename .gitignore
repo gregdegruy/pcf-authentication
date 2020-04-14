@@ -11,3 +11,4 @@ node_modules
 env.json
 npm-debug.log
 package-lock.json
+CDS/CDS.CustomControl.Encryption.Test/app.config
