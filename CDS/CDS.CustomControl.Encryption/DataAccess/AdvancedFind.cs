@@ -3,7 +3,7 @@ using Microsoft.Xrm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Query;
 
 namespace CDS.CustomControl.Encryption
-{   
+{
     public class AdvancedFind : IAdvancedFind
     {
         public AdvancedFind() { }

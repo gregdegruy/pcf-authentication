@@ -3,6 +3,8 @@ using System.Configuration;
 using System;
 using System.Net;
 using System.IO;
+using System.Net.Http;
+using System.Collections.Generic;
 
 namespace CDS.CustomControl.Encryption.Test
 {
@@ -10,6 +12,7 @@ namespace CDS.CustomControl.Encryption.Test
     {
         const string azureFunctionUrl = "https://cdscryptography.azurewebsites.net/api/HttpTrigger1";
         static readonly HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(azureFunctionUrl);
+        static readonly HttpClient httpClient = new HttpClient();
 
         static void Main(string[] args)
         {
@@ -24,6 +27,28 @@ namespace CDS.CustomControl.Encryption.Test
 
             // powerApp.GetSolutions();
 
+            CallExternaelAuthService();
+
+            Console.WriteLine("Nook");            
+        }        
+
+        static async void CallExternaelAuthService()
+        {
+            FormUrlEncodedContent formUrlEncodedContent = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("client_id", AppConfig.CLIENT_ID),
+                new KeyValuePair<string, string>("client_secret", AppConfig.CLIENT_SECRET),
+                new KeyValuePair<string, string>("grant_type", "password"),
+                new KeyValuePair<string, string>("SHA", AppConfig.EXTERNEL_USER),
+                new KeyValuePair<string, string>("SHA", AppConfig.EXTERNEL_PASSWORD),
+                new KeyValuePair<string, string>("scope", "library+reporting+download")
+            });
+            var response = new HttpResponseMessage();
+            response = await httpClient.PostAsync("https://auth.seismic.com/tenants/tstrader/connect/token", formUrlEncodedContent);
+        }
+
+        static void CallAzureFunction()
+        {
             var httpWebRequest = (HttpWebRequest)WebRequest.Create(azureFunctionUrl);
             httpWebRequest.ContentType = "application/json; charset=utf-8";
             httpWebRequest.Method = "POST";
@@ -52,6 +77,6 @@ namespace CDS.CustomControl.Encryption.Test
                 throw;
             }
             Console.WriteLine("Nook");
-        }        
+        }
     }
 }

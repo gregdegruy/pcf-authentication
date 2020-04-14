@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CDS.CustomControl.Encryption", "CDS.CustomControl.Encryption.csproj", "{CBEA1900-EE3E-47B9-A691-4D49EE86D773}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CDS.CustomControl.Encryption", "CDS.CustomControl.Encryption.csproj", "{628416BF-00FC-467F-AAF1-15822EC90AAE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CDS.CustomControl.Encryption.Test", "..\CDS.CustomControl.Encryption.Test\CDS.CustomControl.Encryption.Test.csproj", "{F6D83664-5046-47B3-BE60-794437A20719}"
 EndProject
@@ -13,13 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CBEA1900-EE3E-47B9-A691-4D49EE86D773}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CBEA1900-EE3E-47B9-A691-4D49EE86D773}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CBEA1900-EE3E-47B9-A691-4D49EE86D773}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CBEA1900-EE3E-47B9-A691-4D49EE86D773}.Release|Any CPU.Build.0 = Release|Any CPU
+		{628416BF-00FC-467F-AAF1-15822EC90AAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{628416BF-00FC-467F-AAF1-15822EC90AAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{628416BF-00FC-467F-AAF1-15822EC90AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{628416BF-00FC-467F-AAF1-15822EC90AAE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F6D83664-5046-47B3-BE60-794437A20719}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F6D83664-5046-47B3-BE60-794437A20719}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6D83664-5046-47B3-BE60-794437A20719}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6D83664-5046-47B3-BE60-794437A20719}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

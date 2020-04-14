@@ -13,7 +13,7 @@ namespace CDS.CustomControl.Encryption
         private AdvancedFind _advancedFind = new AdvancedFind();
         private Dictionary<string, dynamic> cdsSystemUserData;
 
-        public CDSDataAccessLayer(IExecutionContext executionContext, 
+        public CDSDataAccessLayer(IExecutionContext executionContext,
             IOrganizationService organizationService, ITracingService tracingService)
         {
             this.executionContext = executionContext;

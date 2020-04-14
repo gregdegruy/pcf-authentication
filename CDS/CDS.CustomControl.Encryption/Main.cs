@@ -16,7 +16,7 @@ namespace CDS.CustomControl.Encryption
         /// Pre Attributes: none
         /// Post Attributes: none
         /// </summary>
-        /// <param name="serviceProvider"></param>
+        /// <param name = "serviceProvider" ></param>
         public void Execute(IServiceProvider serviceProvider)
         {
             IPluginExecutionContext context = (IPluginExecutionContext)
