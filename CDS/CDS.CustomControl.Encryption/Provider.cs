@@ -23,7 +23,7 @@ namespace CDS.CustomControl.Encryption
 
         public async void NotifyEvent()
         {
-            passThroughOnlyTracingService.Trace("In SpurGoTaskNotifyEvent");
+            passThroughOnlyTracingService.Trace("In NotifyEvent");
 
             var cdsDataAccessLayer = new CDSDataAccessLayer(
                 passThroughOnlyExecutionContext, passThroughOnlyOrganizationService, passThroughOnlyTracingService);
@@ -50,16 +50,17 @@ namespace CDS.CustomControl.Encryption
             if (cdsUser.ContainsKey("azureactivedirectoryobjectid"))
             { token = cdsUser["azureactivedirectoryobjectid"]; }
 
+            passThroughOnlyTracingService.Trace("Message " + message.ToString());
+
             FormUrlEncodedContent formUrlEncodedContent = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("SHA", "token"),
                 new KeyValuePair<string, string>("Message", message.ToString())
             });                
 
-            var response = new HttpResponseMessage();
-            response = await httpClient.PostAsync("api/cds/authentication/token", formUrlEncodedContent);
-            response.EnsureSuccessStatusCode();
-        }        
-    
+            //var response = new HttpResponseMessage();
+            //response = await httpClient.PostAsync("api/cds/authentication/token", formUrlEncodedContent);
+            //response.EnsureSuccessStatusCode();
+        }            
     }
 }

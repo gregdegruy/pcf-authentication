@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CrmSdk.CoreAssemblies" Version="9.0.2.24" />
-    <PackageReference Include="xunit" Version="2.4.1" />
   </ItemGroup>
 
 </Project>
