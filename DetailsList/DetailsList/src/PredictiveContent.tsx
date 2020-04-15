@@ -72,18 +72,11 @@ const contentStyles = mergeStyleSets({
         alignItems: 'center',
         fontWeight: FontWeights.semibold,
         padding: '12px 12px 14px 24px',
+        position: 'fixed',
+        background: 'white',
+        width: '750px'
       },
-    ],
-    body: {
-      flex: '4 4 auto',
-      padding: '0 24px 24px 24px',
-      overflowY: 'hidden',
-      selectors: {
-        p: { margin: '14px 0' },
-        'p:first-child': { marginTop: 0 },
-        'p:last-child': { marginBottom: 0 },
-      },
-    },
+    ]
   });
 
 export class PredictiveContent extends React.Component<{}, ITextFieldControlledExampleState, IDetailsListBasicExampleItem> {
@@ -148,18 +141,19 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
                                 onDismiss={this.hideModal}
                                 isBlocking={false}
                                 containerClassName={contentStyles.container}>
-                                <div>
-                                    <span>Content</span>
-                                    <IconButton
-                                        styles={iconButtonStyles}
-                                        iconProps={cancelIcon}
-                                        ariaLabel="Close popup modal"
-                                        onClick={this.hideModal}/>                                                               
+                                <div className={contentStyles.header}>
+                                        <span>Content</span>
+                                        <IconButton
+                                            styles={iconButtonStyles}
+                                            iconProps={cancelIcon}
+                                            ariaLabel="Close popup modal"
+                                            onClick={this.hideModal}/>                                                               
                                 </div>
                                 <iframe src={this.state.iframeSource}
-                                frameBorder="none"
-                                width="100%"
-                                height="100%">                                        
+                                    frameBorder="none"
+                                    width="100%"
+                                    height="100%"
+                                    margin-top="70px">                                        
                                 </iframe>
                             </Modal>                            
 						</div>
