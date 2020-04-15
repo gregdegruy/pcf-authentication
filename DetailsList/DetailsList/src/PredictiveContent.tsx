@@ -2,13 +2,19 @@ import * as React from "react";
 import * as https from "https";
 import { initializeIcons } from '@uifabric/icons';
 import { 
+    getTheme,
+    mergeStyleSets,
     Button, 
     BaseButton, 
     DetailsList, 
     DetailsListLayoutMode, 
+    FontWeights,
     IColumn, 
     Icon,
+    IconButton,
+    IIconProps,
     Link,
+    Modal,
     PrimaryButton,
 } from 'office-ui-fabric-react';
 import { OpenIdManager } from "./OpenIdManager";
@@ -16,9 +22,10 @@ import { OpenIdManager } from "./OpenIdManager";
 import * as env from "../../../env/env.json";
 
 export interface ITextFieldControlledExampleState {
-	items: IDetailsListBasicExampleItem[];
+    iframeSource: string;
+    isModalOpen: boolean;    
+    items: IDetailsListBasicExampleItem[];    
 }
-
 export interface IDetailsListBasicExampleItem {
 	name: string;
 	repository: string;
@@ -34,13 +41,59 @@ const fileIcons: any = {
      "xls": "WordDocument"
 };
 
+const theme = getTheme();
+const cancelIcon: IIconProps = { iconName: 'Cancel' };
+const iconButtonStyles = {
+    root: {
+        color: theme.palette.neutralPrimary,
+        marginLeft: 'auto',
+        marginTop: '4px',
+        marginRight: '2px',
+    },
+    rootHovered: {
+        color: theme.palette.neutralDark,
+    },
+};
+const contentStyles = mergeStyleSets({
+    container: {
+      display: 'flex',
+      flexFlow: 'column nowrap',
+      alignItems: 'stretch',
+      height: 1000,
+      width: 800
+    },
+    header: [
+      theme.fonts.xLargePlus,
+      {
+        flex: '1 1 auto',
+        borderTop: `4px solid ${theme.palette.themePrimary}`,
+        color: theme.palette.neutralPrimary,
+        display: 'flex',
+        alignItems: 'center',
+        fontWeight: FontWeights.semibold,
+        padding: '12px 12px 14px 24px',
+      },
+    ],
+    body: {
+      flex: '4 4 auto',
+      padding: '0 24px 24px 24px',
+      overflowY: 'hidden',
+      selectors: {
+        p: { margin: '14px 0' },
+        'p:first-child': { marginTop: 0 },
+        'p:last-child': { marginBottom: 0 },
+      },
+    },
+  });
+
 export class PredictiveContent extends React.Component<{}, ITextFieldControlledExampleState, IDetailsListBasicExampleItem> {
 	
-	public state: ITextFieldControlledExampleState = { items: [] };		
+    public state: ITextFieldControlledExampleState 
+        = { items: [], isModalOpen: false, iframeSource: "" };		
 	public readonly openId = new OpenIdManager().getInstance();		
 	private _allItems: IDetailsListBasicExampleItem[];
     private _columns: IColumn[];        
-	
+    
 	constructor(props: any) {
 		super(props);				
 		initializeIcons();
@@ -62,7 +115,9 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
             { key: "column5", name: "Application Url", fieldName: "applicationUrl", minWidth: 100, maxWidth: 200, isResizable: true },
 		];
 		this.state = {
-			items: this._allItems
+            items: this._allItems,
+            isModalOpen: false,
+            iframeSource: ""
 		};
     }        
     
@@ -87,6 +142,26 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
 								ariaLabelForSelectAllCheckbox="Toggle selection for all items"
 								checkButtonAriaLabel="Row checkbox"
 							/>
+                            <Modal
+                                titleAriaId={"9d803647-cd3a-4931-a30a-1a8464457d9e"}
+                                isOpen={this.state.isModalOpen}
+                                onDismiss={this.hideModal}
+                                isBlocking={false}
+                                containerClassName={contentStyles.container}>
+                                <div>
+                                    <span>Content</span>
+                                    <IconButton
+                                        styles={iconButtonStyles}
+                                        iconProps={cancelIcon}
+                                        ariaLabel="Close popup modal"
+                                        onClick={this.hideModal}/>                                                               
+                                </div>
+                                <iframe src={this.state.iframeSource}
+                                frameBorder="none"
+                                width="100%"
+                                height="100%">                                        
+                                </iframe>
+                            </Modal>                            
 						</div>
 					</div>
 				</div>
@@ -94,7 +169,7 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
 		);
     }
 
-	private getPredictiveContent = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement | HTMLDivElement | BaseButton | Button | HTMLSpanElement, MouseEvent>) => {
+    private getPredictiveContent = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement | HTMLDivElement | BaseButton | Button | HTMLSpanElement, MouseEvent>) => {
         const predictiveContentId = "Flow"; // case matters!
         const contextId = "optional";
         let options = {
@@ -106,7 +181,6 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
             }
         };
         let contentPromise = new Promise((resolve, reject) => {                          		
-            var predictiveContent: any[] = [];  
             let req = https.request(options, function (response) {
                 var data = "";
                 response.on("data", function (chunk) {
@@ -114,29 +188,7 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
                 });		  
                 response.on("end", function () {								
                     let formattedData = JSON.parse(data);
-                    for (let i = 0; i < formattedData.length; i++) {
-                        console.log(formattedData[i].applicationUrls[0].name); // handle empty
-                        predictiveContent.push({
-                            name: formattedData[i].name,
-                            repository: formattedData[i].repository,
-                            scorePoints: formattedData[i].score.points,
-                            format: 
-                                <div>
-                                    <Icon iconName={fileIcons[formattedData[i].format.toLowerCase()]} />&nbsp; 
-                                    {formattedData[i].format}
-                                </div>,
-                            applicationUrl:  
-                            <Link
-                                key={1}
-                                onClick={() => { 
-                                    window.open(formattedData[i].applicationUrls[0].url, "MyWindow", "width=1000,height=800"); 
-                                }}
-                            >
-                            {formattedData[i].applicationUrls[0].name} <Icon iconName={'NavigateExternalInline'} />
-                            </Link>,
-                        });
-                    }
-                    resolve(predictiveContent);
+                    resolve(formattedData);
                 });		  
                 response.on("error", function (error) {
                     console.error(error);
@@ -145,8 +197,36 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
             });		  
             req.end();
         }); 		
-        contentPromise.then((payload: any) => {
-            this.setState({items: payload});
+        contentPromise.then((formattedData: any) => {
+            var predictiveContent: any[] = [];
+            for (let i = 0; i < formattedData.length; i++) {
+                console.log(formattedData[i].applicationUrls[0].name); // handle empty
+                predictiveContent.push({
+                    name: formattedData[i].name,
+                    repository: formattedData[i].repository,
+                    scorePoints: formattedData[i].score.points,
+                    format: 
+                        <div>
+                            <Icon iconName={fileIcons[formattedData[i].format.toLowerCase()]} />&nbsp; 
+                            {formattedData[i].format}
+                        </div>,
+                    applicationUrl:  
+                    <Link
+                        key={i}
+                        onClick={() => {                             
+                            this.setState({iframeSource: formattedData[i].applicationUrls[0].url})
+                            this.hideModal();
+                        }}>
+                        {formattedData[i].applicationUrls[0].name} 
+                        <Icon iconName={'NavigateExternalInline'} />
+                    </Link>
+                });
+            }
+            this.setState({items: predictiveContent});            
         });
-	};
+    };
+    
+    private hideModal = () => {
+        this.setState({isModalOpen: !this.state.isModalOpen});
+    }
 }
