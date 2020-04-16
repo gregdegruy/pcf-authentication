@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xrm.Sdk;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
 using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
@@ -81,7 +83,34 @@ namespace CDS.CustomControl.Encryption
                 cdsUserToken = sb.ToString();
             }
 
-            passThroughOnlyTracingService.Trace("Generated signed token " + cdsUserToken);
+            string azFuncResponse = "Waiting for azFuncResponse...";
+            const string azureFunctionUrl = "https://cdscryptography.azurewebsites.net/api/HttpTriggerRestSharp";
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(azureFunctionUrl);
+            httpWebRequest.ContentType = "application/json; charset=utf-8";
+            httpWebRequest.Method = "POST";
+            string json = "";
+            using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                json = "{ \"name\" : \"Isabelle\"}";
+
+                streamWriter.Write(json);
+                streamWriter.Flush();
+            }
+            try {
+                var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+                using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
+                {
+                    var responseText = streamReader.ReadToEnd();
+                    azFuncResponse = responseText;
+                    Console.WriteLine(responseText);
+                }
+            } catch (WebException ex) {
+
+                Console.WriteLine(ex.Message);
+                throw;
+            }
+
+            passThroughOnlyTracingService.Trace("Generated signed token " + cdsUserToken + " REAL token " + azFuncResponse);
 
             //var response = new HttpResponseMessage();
             //response = await httpClient.PostAsync("api/cds/authentication/token", formUrlEncodedContent);

@@ -39,7 +39,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="AuthenticationComponent\AuthenticationComponent.pcfproj"/>
+    <ProjectReference Include="DetailsList\Details.pcfproj"/>
   </ItemGroup>
 
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
