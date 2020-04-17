@@ -1,3 +1,3 @@
 msbuild /t:restore
 REM msbuild
-pac pcf push -pp seismic -v minimal
+pac pcf push --publisher-prefix grdegr -v minimal

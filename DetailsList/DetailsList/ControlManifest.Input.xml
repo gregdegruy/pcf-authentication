@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <manifest>
-  <control namespace="CDS" constructor="AuthenticationComponent" version="0.0.2" display-name-key="AuthenticationComponent" description-key="Authenticaties using a servicve" control-type="standard">   
+  <control namespace="MrUniverse" constructor="AuthenticationComponent" version="0.0.2" display-name-key="AuthenticationComponent" description-key="Authenticaties using a servicve" control-type="standard">   
     <property name="sampleProperty" display-name-key="Property_Display_Key" description-key="Property_Desc_Key" of-type="SingleLine.Text" usage="bound" required="true" />
     <resources>
       <code path="index.ts" order="1"/>

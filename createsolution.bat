@@ -1,0 +1,1 @@
+pac solution --publisher-name Greg --publisher-prefix grdegr
