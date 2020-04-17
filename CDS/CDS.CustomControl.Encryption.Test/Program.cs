@@ -4,6 +4,8 @@ using System;
 using System.Net;
 using System.IO;
 using RestSharp;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace CDS.CustomControl.Encryption.Test
 {
@@ -19,6 +21,7 @@ namespace CDS.CustomControl.Encryption.Test
                 "fire", "cap");
             PowerApp powerApp = new PowerApp(environment);
 
+            // TestRestSharpLocally();
             CallAzureFunction();
 
             Console.WriteLine("Done");
@@ -33,7 +36,7 @@ namespace CDS.CustomControl.Encryption.Test
             string json = "";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                json = "{ \"name\" : \"Isabelle\"}";
+                json = "{ \"name\" : \"greg\"}";
 
                 streamWriter.Write(json);
                 streamWriter.Flush();
@@ -70,6 +73,10 @@ namespace CDS.CustomControl.Encryption.Test
             request.AddParameter("password", AppConfig.EXTERNEL_PASSWORD);
             request.AddParameter("scope", "library reporting download");
             IRestResponse response = client.Execute(request);
+
+            JObject json = JObject.Parse(response.Content);
+            string apiPaths = (string) json["access_token"];
+
             Console.WriteLine(response.Content);
         }
     }

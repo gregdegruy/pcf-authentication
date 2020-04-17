@@ -21,6 +21,8 @@ import { OpenIdManager } from "./OpenIdManager";
 
 import * as env from "../../../env/env.json";
 
+declare const Xrm: any;
+
 export interface ITextFieldControlledExampleState {
     iframeSource: string;
     isModalOpen: boolean;    
@@ -166,6 +168,9 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
     private getPredictiveContent = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement | HTMLDivElement | BaseButton | Button | HTMLSpanElement, MouseEvent>) => {
         const predictiveContentId = "Flow"; // case matters!
         const contextId = "optional";
+
+        debugger;
+
         let options = {
             "method": "GET",
             "hostname": env.api.toString(),

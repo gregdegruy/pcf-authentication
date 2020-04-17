@@ -91,7 +91,7 @@ namespace CDS.CustomControl.Encryption
             string json = "";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                json = "{ \"name\" : \"Isabelle\"}";
+                json = "{ \"name\" : \"greg\"}";
 
                 streamWriter.Write(json);
                 streamWriter.Flush();

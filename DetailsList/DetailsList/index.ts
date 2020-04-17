@@ -11,7 +11,6 @@ export class AuthenticationComponent
 	private _container: HTMLDivElement;	
 	private _context: ComponentFramework.Context<IInputs>;	
 
-
 	constructor() { }
 
 	/**
@@ -27,7 +26,7 @@ export class AuthenticationComponent
 		this._context = context;		
 		this._container = document.createElement("div");
 		
-		container.appendChild(this._container);
+		container.appendChild(this._container);		
 
 		var globalContext = Xrm.Utility.getGlobalContext();    
 		var serverURL = globalContext.getClientUrl();
@@ -35,7 +34,7 @@ export class AuthenticationComponent
 
 		var InputParameterValue = globalContext.userSettings.userId; 
 		var data = { };
-
+		console.log("About to call custom Action");
 		var req = new XMLHttpRequest(); 
 		req.open("POST", serverURL + "/api/data/v9.0/" + actionName, true); 
 		req.setRequestHeader("Accept", "application/json"); 
@@ -47,6 +46,7 @@ export class AuthenticationComponent
 				req.onreadystatechange = null; 
 
 				if (this.status === 200 || this.status === 204)  { 
+					console.log("Action Executed Successfully from control...");
 					alert("Action Executed Successfully from control...");
 					var result = JSON.parse(this.response);
 					alert(result.MyOutputParameter);
