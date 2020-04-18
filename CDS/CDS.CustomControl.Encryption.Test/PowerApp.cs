@@ -13,13 +13,37 @@ namespace CDS.CustomControl.Encryption.Test.Authentication
     {
         PowerAppServerConnection serverConnection;
         PowerAppServerConfiguration config;
-
-        // TODO: get bug before publisher is created
-        public Guid crmSdkPublisherId { get; private set; }
+        private AdvancedFind _advancedFind = new AdvancedFind();
 
         public PowerApp(PowerPlatformEnvironment environment) {
             serverConnection = new PowerAppServerConnection(environment.ServerAddress, environment.User, environment.Password);
             config = serverConnection.GetServerConfiguration();
+        }
+
+        public void Fetch()
+        {                            
+            Action action = () =>
+            {
+                OrganizationServiceProxy _serviceProxy;
+
+                using (_serviceProxy = PowerAppServerConnection.GetOrganizationProxy(config))
+                {
+                    var xml = "<fetch distinct='false' version='1.0' output-format='xml-platform' mapping='logical' no-lock='true'>" +
+                                "<entity name='systemuser'>" +
+                                    "<attribute name='azureactivedirectoryobjectid' />" +
+                                    "<attribute name='systemuserid' />" +
+                                    "<attribute name='fullname' />" +
+                                    "<attribute name='internalemailaddress' />" +
+                                    "<filter type='and'>" +
+                                        "<condition attribute='systemuserid' operator='eq' value='{" + "98763981-12b8-44c5-a98c-1c1e392f56cf" + "}' />" +
+                                    "</filter>" +
+                                "</entity>" +
+                              "</fetch>";
+
+                    Entity systemUser = _advancedFind.Fetch(xml, _serviceProxy);
+                }
+            };
+            SafeExecutor(action);
         }
 
         public void GetSolutions()
@@ -45,12 +69,10 @@ namespace CDS.CustomControl.Encryption.Test.Authentication
             SafeExecutor(action);
         }
 
-        // TODO: Better understand delegate
         private void SafeExecutor(Action action)
         {
             SafeExecutor(() => { action(); return 0; });
         }
-
         private T SafeExecutor<T>(Func<T> action)
         {
             try

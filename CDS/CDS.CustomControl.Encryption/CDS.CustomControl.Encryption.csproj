@@ -71,8 +71,13 @@
     <Compile Include="Provider.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Azure\ExportedTemplate-rg-dyn-openhack.zip" />
     <None Include="KeyFile.pfx" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Azure\AzFunction.txt" />
+    <Content Include="Azure\RestSharp.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

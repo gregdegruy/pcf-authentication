@@ -6,10 +6,6 @@ namespace CDS.CustomControl.Encryption.Test
 {
     public class UnitTest
     {
-        // 1 TODO: run this on custom control load
-        // TODD: send this in JWT token format and sign it using the SHA1
-        // TODO: use secret from seismic 
-        // TODO: 
         [Fact]
         public void CreateCDSUserHash()
         {

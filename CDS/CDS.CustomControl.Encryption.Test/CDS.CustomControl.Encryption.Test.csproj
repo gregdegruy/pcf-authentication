@@ -150,6 +150,8 @@
     <Compile Include="Authentication\ServerConfiguration.cs" />
     <Compile Include="Authentication\ServerConnection.cs" />
     <Compile Include="CDM\Entities.cs" />
+    <Compile Include="DataAccess\AdvancedFind.cs" />
+    <Compile Include="DataAccess\IAdvancedFind.cs" />
     <Compile Include="IntegrationTest.cs" />
     <Compile Include="PowerApp.cs" />
     <Compile Include="PowerPlatformEnvironment.cs" />

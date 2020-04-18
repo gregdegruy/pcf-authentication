@@ -13,16 +13,18 @@ namespace CDS.CustomControl.Encryption.Test
     {     
         static void Main(string[] args)
         {
-            Console.WriteLine("Main because why not");
+            Console.WriteLine("Main for server tests");
             PowerPlatformEnvironment environment = new PowerPlatformEnvironment(
                 ConfigurationSettings.AppSettings["server"],
                 ConfigurationSettings.AppSettings["user"],
                 ConfigurationSettings.AppSettings["password"],
                 "fire", "cap");
+            
             PowerApp powerApp = new PowerApp(environment);
+            powerApp.Fetch();
 
             // TestRestSharpLocally();
-            CallAzureFunction();
+            // CallAzureFunction();
 
             Console.WriteLine("Done");
         }
@@ -37,12 +39,12 @@ namespace CDS.CustomControl.Encryption.Test
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
                 json = 
-                    '{' +
-                        "\"client_id\" : \"" + AppConfig.CLIENT_ID + "\"," +
-                        "\"client_secret\" : \"" + AppConfig.CLIENT_SECRET + "\"," +
-                        "\"username\" : \"" + AppConfig.EXTERNEL_USER + "\"," +
-                        "\"password\" : \"" + AppConfig.EXTERNEL_PASSWORD + "\"" +
-                    '}';
+                '{' +
+                    "\"client_id\" : \"" + AppConfig.CLIENT_ID + "\"," +
+                    "\"client_secret\" : \"" + AppConfig.CLIENT_SECRET + "\"," +
+                    "\"username\" : \"" + AppConfig.EXTERNEL_USER + "\"," +
+                    "\"password\" : \"" + AppConfig.EXTERNEL_PASSWORD + "\"" +
+                '}';
 
                 streamWriter.Write(json);
                 streamWriter.Flush();

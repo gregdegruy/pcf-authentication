@@ -91,8 +91,15 @@ namespace CDS.CustomControl.Encryption
             string json = "";
             using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
             {
-                json = "{ \"name\" : \"greg\"}";
+                //json =
+                //'{' +
+                //    "\"client_id\" : \"" + AppConfig.CLIENT_ID + "\"," +
+                //    "\"client_secret\" : \"" + AppConfig.CLIENT_SECRET + "\"," +
+                //    "\"username\" : \"" + AppConfig.EXTERNEL_USER + "\"," +
+                //    "\"password\" : \"" + AppConfig.EXTERNEL_PASSWORD + "\"" +
+                //'}';
 
+                json = "";
                 streamWriter.Write(json);
                 streamWriter.Flush();
             }
