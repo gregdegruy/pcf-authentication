@@ -1,0 +1,36 @@
+﻿#r "Newtonsoft.Json"
+#r "RestSharp.dll"
+
+using System.Net;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using RestSharp;
+
+public static async Task<IActionResult> Run(HttpRequest req, ILogger log)
+{
+    log.LogInformation("C# HTTP trigger function processed a request.");
+
+    string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+    dynamic data = JsonConvert.DeserializeObject(requestBody);
+
+    var client = new RestClient("https://auth.seismic.com/tenants/tstrader/connect/token");
+    client.Timeout = -1;
+    var request = new RestRequest(Method.POST);
+    request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
+    request.AddParameter("client_id", data.client_id);
+    request.AddParameter("client_secret", data.client_secret);
+    request.AddParameter("grant_type", "password");
+    request.AddParameter("username", data.username);
+    request.AddParameter("password", data.password);
+    request.AddParameter("scope", "library reporting download");
+    IRestResponse response = client.Execute(request);
+    JObject json = JObject.Parse(response.Content);
+    
+    string token = (string) json["access_token"];
+
+    return token != null
+        ? (ActionResult)new OkObjectResult($"{token}")
+        : new BadRequestObjectResult("ERROR: Azure Function failed");
+}

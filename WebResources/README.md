@@ -1,1 +1,0 @@
-Use [Custom Actions](https://community.dynamics.com/crm/b/thinkdynamicdodynamic/posts/call-global-custom-action-using-javascript-in-dynamics-365) so the Plug-in fires on an action you define. Instead of the just the entity CRUD methods given out of box.

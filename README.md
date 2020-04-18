@@ -28,3 +28,10 @@ Creates a `prefix_Namespace.ComponentName` control if changes are made to any of
 If you face this `Error: WebResource content size is too big.` can use temporarily use [this hack](https://parthimscrm.wordpress.com/2016/05/10/webresource-content-size-is-too-big-microsoft-dynamics-crm-error-code-0x8004f114/) that involves increasing the size limit of email attachments from the 5120 KB to something larger.
 
 [Connect pac to CDS](https://docs.microsoft.com/en-us/powerapps/developer/component-framework/import-custom-controls#connecting-to-your-environment)
+
+
+
+1. Make sure global action step is activated
+2. Make sure global action step is registered in Plug-in registration tool
+3. deploy.bat 
+4. 

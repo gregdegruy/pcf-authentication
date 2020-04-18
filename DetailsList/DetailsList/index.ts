@@ -26,15 +26,15 @@ export class AuthenticationComponent
 		this._context = context;		
 		this._container = document.createElement("div");
 		
-		container.appendChild(this._container);		
+		container.appendChild(this._container);				
 
 		var globalContext = Xrm.Utility.getGlobalContext();    
 		var serverURL = globalContext.getClientUrl();
-		var actionName = "seismic_MyGlobalAction";
+		var actionName = "seismic_cc_global_action";
 
 		var InputParameterValue = globalContext.userSettings.userId; 
 		var data = { };
-		console.log("About to call custom Action");
+
 		var req = new XMLHttpRequest(); 
 		req.open("POST", serverURL + "/api/data/v9.0/" + actionName, true); 
 		req.setRequestHeader("Accept", "application/json"); 
@@ -54,11 +54,10 @@ export class AuthenticationComponent
 
 				else  { 
 					var error = JSON.parse(this.response).error; 
-					alert("Error in Action: "+error.message); 
+					alert("Ask your admin if the Action is activated or give the Error in Action: "+error.message);  
 				} 
 			} 
 		}; 
-
 		req.send(window.JSON.stringify(data)); 
 	}
 	
