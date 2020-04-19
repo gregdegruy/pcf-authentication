@@ -57,6 +57,29 @@ namespace CDS.CustomControl.Encryption
             return new Dictionary<string, string>() { { "", "" } };
         }
 
+        private Entity RetrieveConfiguration(IOrganizationService service, Guid userId)
+        {
+            var xml = "<fetch distinct='false' version='1.0' output-format='xml-platform' mapping='logical' no-lock='true'>" +
+                            "<entity name='seismic_cc_configuration'>" +
+                                "<attribute name='seismic_cc_configurationid' />" +
+                                "<attribute name='seismic_name' />" +
+                                "<attribute name='seismic_cc_clientid' />" +
+                                "<attribute name='seismic_cc_clientsecret' />" +
+                                "<filter type='and'>" +
+                                    "<condition attribute='ownerid' operator='eq' uiname='Greg Degruy' uitype='systemuser' value='{" + userId.ToString() + "}' />" +
+                                "</filter>" +
+                            "</entity>" +
+                          "</fetch>"; ;
+
+            Entity systemUser = _advancedFind.Fetch(xml, service);
+
+            if (systemUser != null)
+            {
+                return systemUser;
+            }
+            else { return null; }
+        }
+
         private Entity RetrieveSystemUser(IOrganizationService service, Guid userId)
         {
             var xml = "<fetch distinct='false' version='1.0' output-format='xml-platform' mapping='logical' no-lock='true'>" +

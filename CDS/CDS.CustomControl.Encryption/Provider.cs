@@ -39,14 +39,12 @@ namespace CDS.CustomControl.Encryption
             httpClient.BaseAddress = new Uri("https://org.api.dynamics.com/");
 
             var message = new StringBuilder("");
-
             if (cdsUser.ContainsKey("fullname"))
             {
                 message.Append(cdsUser["fullname"] + " completed the ");
             } else { 
                 message.Append("USERNAME ERROR completed the "); 
             }
-
             string email = "";
             string token = "";
             if (cdsUser.ContainsKey("internalemailaddress")) { 
@@ -104,7 +102,6 @@ namespace CDS.CustomControl.Encryption
                 }
                 catch (WebException ex)
                 {
-
                     Console.WriteLine(ex.Message);
                     throw;
                 }

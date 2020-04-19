@@ -28,19 +28,32 @@ namespace CDS.CustomControl.Encryption.Test.Authentication
 
                 using (_serviceProxy = PowerAppServerConnection.GetOrganizationProxy(config))
                 {
-                    var xml = "<fetch distinct='false' version='1.0' output-format='xml-platform' mapping='logical' no-lock='true'>" +
-                                "<entity name='systemuser'>" +
-                                    "<attribute name='azureactivedirectoryobjectid' />" +
-                                    "<attribute name='systemuserid' />" +
-                                    "<attribute name='fullname' />" +
-                                    "<attribute name='internalemailaddress' />" +
-                                    "<filter type='and'>" +
-                                        "<condition attribute='systemuserid' operator='eq' value='{" + "98763981-12b8-44c5-a98c-1c1e392f56cf" + "}' />" +
-                                    "</filter>" +
-                                "</entity>" +
-                              "</fetch>";
+                    string userId = "98763981-12b8-44c5-a98c-1c1e392f56cf";
+                    //var xml = "<fetch distinct='false' version='1.0' output-format='xml-platform' mapping='logical' no-lock='true'>" +
+                    //            "<entity name='systemuser'>" +
+                    //                "<attribute name='azureactivedirectoryobjectid' />" +
+                    //                "<attribute name='systemuserid' />" +
+                    //                "<attribute name='fullname' />" +
+                    //                "<attribute name='internalemailaddress' />" +
+                    //                "<filter type='and'>" +
+                    //                    "<condition attribute='systemuserid' operator='eq' value='{" + userId + "}' />" +
+                    //                "</filter>" +
+                    //            "</entity>" +
+                    //          "</fetch>";
 
-                    Entity systemUser = _advancedFind.Fetch(xml, _serviceProxy);
+                    var xml = "<fetch distinct='false' version='1.0' output-format='xml-platform' mapping='logical' no-lock='true'>" +
+                            "<entity name='seismic_cc_configuration'>" +
+                                "<attribute name='seismic_cc_configurationid' />" +
+                                "<attribute name='seismic_name' />" +
+                                "<attribute name='seismic_cc_clientid' />" +
+                                "<attribute name='seismic_cc_clientsecret' />" +
+                                "<filter type='and'>" +
+                                    "<condition attribute='ownerid' operator='eq' uiname='Greg Degruy' uitype='systemuser' value='{" + userId + "}' />" +
+                                "</filter>" +
+                            "</entity>" +
+                          "</fetch>"; ;
+
+                    Entity entity = _advancedFind.Fetch(xml, _serviceProxy);
                 }
             };
             SafeExecutor(action);
