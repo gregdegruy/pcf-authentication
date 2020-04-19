@@ -28,38 +28,38 @@ export class AuthenticationComponent
 		
 		container.appendChild(this._container);				
 
-		var globalContext = Xrm.Utility.getGlobalContext();    
-		var serverURL = globalContext.getClientUrl();
-		var actionName = "seismic_cc_onload_action";
+		// var globalContext = Xrm.Utility.getGlobalContext();    
+		// var serverURL = globalContext.getClientUrl();
+		// var actionName = "seismic_cc_onload_action";
 
-		var InputParameterValue = globalContext.userSettings.userId; 
-		var data = { };
+		// var InputParameterValue = globalContext.userSettings.userId; 
+		// var data = { };
 
-		var req = new XMLHttpRequest(); 
-		req.open("POST", serverURL + "/api/data/v9.0/" + actionName, true); 
-		req.setRequestHeader("Accept", "application/json"); 
-		req.setRequestHeader("Content-Type", "application/json; charset=utf-8"); 
-		req.setRequestHeader("OData-MaxVersion", "4.0"); 
-		req.setRequestHeader("OData-Version", "4.0"); 
-		req.onreadystatechange = function () { 
-			if (this.readyState === 4) { 
-				req.onreadystatechange = null; 
+		// var req = new XMLHttpRequest(); 
+		// req.open("POST", serverURL + "/api/data/v9.0/" + actionName, true); 
+		// req.setRequestHeader("Accept", "application/json"); 
+		// req.setRequestHeader("Content-Type", "application/json; charset=utf-8"); 
+		// req.setRequestHeader("OData-MaxVersion", "4.0"); 
+		// req.setRequestHeader("OData-Version", "4.0"); 
+		// req.onreadystatechange = function () { 
+		// 	if (this.readyState === 4) { 
+		// 		req.onreadystatechange = null; 
 
-				if (this.status === 200 || this.status === 204)  { 
-					var successMessage:string = "CDS PCF OnLoad Action Executed Successfully from control...";
-					console.log(successMessage);
-					alert(successMessage);
-					var result = JSON.parse(this.response);
-					alert(result.MyOutputParameter);
-				} 
+		// 		if (this.status === 200 || this.status === 204)  { 
+		// 			var successMessage:string = "CDS PCF OnLoad Action Executed Successfully from control...";
+		// 			console.log(successMessage);
+		// 			alert(successMessage);
+		// 			var result = JSON.parse(this.response);
+		// 			alert(result.MyOutputParameter);
+		// 		} 
 
-				else  { 
-					var error = JSON.parse(this.response).error; 
-					alert("Ask your admin if the Action is activated or give the Error in Action: "+error.message);  
-				} 
-			} 
-		}; 
-		req.send(window.JSON.stringify(data)); 
+		// 		else  { 
+		// 			var error = JSON.parse(this.response).error; 
+		// 			alert("Ask your admin if the Action is activated or give the Error in Action: "+error.message);  
+		// 		} 
+		// 	} 
+		// }; 
+		// req.send(window.JSON.stringify(data)); 
 	}
 	
 	/**

@@ -39,6 +39,24 @@ namespace CDS.CustomControl.Encryption
 
             return new Dictionary<string, dynamic>() { { "", "" } };
         }
+
+        public Dictionary<string, string> GetLoginCredentials()
+        {
+            if (executionContext.InputParameters.Count > 0 
+                && executionContext.MessageName == "seismic_cc_login_action")
+            {
+                var externelUserCredentials = new Dictionary<string, string>() 
+                { 
+                    { "username", executionContext.InputParameters["username"].ToString() },
+                    { "password", executionContext.InputParameters["password"].ToString() }
+                };
+
+                return externelUserCredentials;
+            }
+
+            return new Dictionary<string, string>() { { "", "" } };
+        }
+
         private Entity RetrieveSystemUser(IOrganizationService service, Guid userId)
         {
             var xml = "<fetch distinct='false' version='1.0' output-format='xml-platform' mapping='logical' no-lock='true'>" +
