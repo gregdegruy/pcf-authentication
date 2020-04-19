@@ -102,39 +102,39 @@ export class AuthenticationForm extends React.Component<{}, ITextFieldControlled
 		// this.openId.getToken();	
 		
 		// store in CDS
-		// var globalContext = Xrm.Utility.getGlobalContext();    
-		// var serverURL = globalContext.getClientUrl();
-		// var actionName = "seismic_cc_login_action";
+		var globalContext = Xrm.Utility.getGlobalContext();    
+		var serverURL = globalContext.getClientUrl();
+		var actionName = "seismic_cc_login_action";
 
-		// var InputParameterValue = globalContext.userSettings.userId; 
-		// var data = {
-		// 	username: this.state.username,
-		// 	password: this.state.password
-		//  };
+		var data = {
+			"username": this.state.username,
+			"password": this.state.password
+		};
 
-		// var req = new XMLHttpRequest(); 
-		// req.open("POST", serverURL + "/api/data/v9.0/" + actionName, true); 
-		// req.setRequestHeader("Accept", "application/json"); 
-		// req.setRequestHeader("Content-Type", "application/json; charset=utf-8"); 
-		// req.setRequestHeader("OData-MaxVersion", "4.0"); 
-		// req.setRequestHeader("OData-Version", "4.0"); 
-		// req.onreadystatechange = function () { 
-		// 	if (this.readyState === 4) { 
-		// 		req.onreadystatechange = null; 
+		var req = new XMLHttpRequest(); 
+		req.open("POST", serverURL + "/api/data/v9.0/" + actionName, true); 
+		req.setRequestHeader("Accept", "application/json"); 
+		req.setRequestHeader("Content-Type", "application/json; charset=utf-8"); 
+		req.setRequestHeader("OData-MaxVersion", "4.0"); 
+		req.setRequestHeader("OData-Version", "4.0"); 
+		req.onreadystatechange = function () { 
+			if (this.readyState === 4) { 
+				req.onreadystatechange = null; 
 
-		// 		if (this.status === 200 || this.status === 204)  { 
-		// 			console.log("Action Executed Successfully from control...");
-		// 			alert("Action Executed Successfully from control...");
-		// 			var result = JSON.parse(this.response);
-		// 			alert(result.MyOutputParameter);
-		// 		} 
+				if (this.status === 200 || this.status === 204)  { 
+					var successMessage:string = "CDS PCF Login Action Executed Successfully from control...";
+					console.log(successMessage);
+					alert(successMessage);
+					var result = JSON.parse(this.response);
+					alert(result.MyOutputParameter);
+				} 
 
-		// 		else  { 
-		// 			var error = JSON.parse(this.response).error; 
-		// 			alert("Ask your admin if the Action is activated or give the Error in Action: "+error.message);  
-		// 		} 
-		// 	} 
-		// }; 
-		// req.send(window.JSON.stringify(data)); 
+				else  { 
+					var error = JSON.parse(this.response).error; 
+					alert("Ask your admin if the Action is activated or give the Error in Action: "+error.message);  
+				} 
+			} 
+		}; 
+		req.send(window.JSON.stringify(data)); 
 	};
 }
