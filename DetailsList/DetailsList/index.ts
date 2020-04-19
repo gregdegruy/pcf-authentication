@@ -30,7 +30,7 @@ export class AuthenticationComponent
 
 		var globalContext = Xrm.Utility.getGlobalContext();    
 		var serverURL = globalContext.getClientUrl();
-		var actionName = "seismic_cc_global_action";
+		var actionName = "seismic_cc_onload_action";
 
 		var InputParameterValue = globalContext.userSettings.userId; 
 		var data = { };
@@ -46,8 +46,9 @@ export class AuthenticationComponent
 				req.onreadystatechange = null; 
 
 				if (this.status === 200 || this.status === 204)  { 
-					console.log("Action Executed Successfully from control...");
-					alert("Action Executed Successfully from control...");
+					var successMessage:string = "CDS PCF OnLoad Action Executed Successfully from control...";
+					console.log(successMessage);
+					alert(successMessage);
 					var result = JSON.parse(this.response);
 					alert(result.MyOutputParameter);
 				} 

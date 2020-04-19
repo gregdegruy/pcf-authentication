@@ -4,24 +4,7 @@ import { UserManager } from "oidc-client";
 import * as env from "../../../env/env.json";
 
 export class OpenIdManager {
-    // TODO: Send sign cert to ISV
-    //
-    //
-    // something running on dynamics server side to BASE 64 encode and SSA sign the thing
-    //
-    // create JWT (sign it on server)
-    // have plugin fire and sign this
-    // or use azure functions
-    //
-    // use TS to get bearer token for user?
-    //
-    // id
-    // azureactivedirectoryobjectid - possiblly null
-    // internalemailaddress
-    // 
-    //
-    // dynamics sends signed JWT to ISV
-    // isv provides and stores key to allow for API access with no expire time
+    
     private static instance: OpenIdManager;
     public userManager: UserManager;
     public expirersAt: number;
@@ -52,7 +35,7 @@ export class OpenIdManager {
         });
 
         this.userManager.signinPopupCallback();            
-
+        
         if (document.cookie.split(';').filter((item) => item.trim().startsWith('commonDataServiceToken=')).length) {
             var cookie = document.cookie.replace(/(?:(?:^|.*;\s*)commonDataServiceToken\s*\=\s*([^;]*).*$)|^.*$/, "$1");            
             this.bearerToken = cookie;            
@@ -73,8 +56,6 @@ export class OpenIdManager {
     }
     
     public getToken(): void { 
-        // TODO: replace openid connect
-        // with isv API that gives non expiring api bearer token
         if (!this.authenticated) {            
             this.userManager.signinPopup({
                 popupWindowFeatures : 'location=no,toolbar=no,width=680,height=700'
