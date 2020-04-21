@@ -9,8 +9,7 @@ namespace CDS.CustomControl.Encryption
         /// 
         /// Creates a signed SHA user token on load of a PCF control
         /// 
-        /// Trigger: On load or On login of PCF component
-        /// Stage: Pre
+        /// Trigger: On load (PreValidation) or On login (PostOperation) of PCF component
         /// Method: Synchronous
         /// Filter Attributes: none
         /// Pre Attributes: none

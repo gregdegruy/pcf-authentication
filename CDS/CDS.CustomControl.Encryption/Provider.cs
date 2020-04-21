@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -100,8 +101,21 @@ namespace CDS.CustomControl.Encryption
                     using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
                     {
                         var responseText = streamReader.ReadToEnd();
-                        azFuncResponse = responseText;
+                        azFuncResponse = responseText;                        
                     }
+                    var cols
+                            = new ColumnSet(new String[] { "systemuserid", "internalemailaddress", "seismic_cc_token" });
+                    Entity systemUser
+                        = passThroughOnlyOrganizationService.Retrieve("systemuser", passThroughOnlyExecutionContext.InitiatingUserId, cols);
+                    systemUser["seismic_cc_token"] = azFuncResponse;
+                    systemUser["seismic_cc_username"] = loginCredentials["username"];
+                    passThroughOnlyTracingService.Trace("About to update system user id: " + passThroughOnlyExecutionContext.InitiatingUserId.ToString());
+                    passThroughOnlyTracingService.Trace("Using this new token: " + systemUser["seismic_cc_token"]);
+                    try
+                    {
+                        passThroughOnlyOrganizationService.Update(systemUser);
+                    }
+                    catch (Exception e) { passThroughOnlyTracingService.Trace("ERROR: could not update user: " + e.ToString()); }
                 }
                 catch (WebException ex)
                 {

@@ -70,9 +70,10 @@ namespace CDS.CustomControl.Encryption.Test.Authentication
                 using (_serviceProxy = PowerAppServerConnection.GetOrganizationProxy(config))
                 {
                     string userId = "98763981-12b8-44c5-a98c-1c1e392f56cf";
-                    var cols = new ColumnSet(new String[] { "systemuserid", "internalemailaddress", "seismic_cc_token" });
+                    var cols = new ColumnSet(new String[] { "systemuserid", "internalemailaddress", "seismic_cc_token", "seismic_cc_username" });
                     Entity systemUser = _serviceProxy.Retrieve("systemuser", new Guid(userId), cols);
-                    systemUser["seismic_cc_token"] = "87evfrw78vt3398983098v390309309";
+                    systemUser["seismic_cc_token"] = "87evfrw78vt3398983098v39030yvgtuvtvvvuyvtvtftycc5869309";
+                    systemUser["seismic_cc_username"] = "ewrty@someone.com";
                     _serviceProxy.Update(systemUser);
                 }
             };

@@ -26,7 +26,7 @@ export class App extends React.Component {
                 <div style={styles.debug}>
                     <AuthenticationForm/>
                 </div>
-                <div style={this.openId.authenticated ? styles.visible : styles.hidden}>
+                <div style={this.openId.authenticated ? styles.hidden : styles.visible}>
                     <PredictiveContent/>
                 </div>
             </>
