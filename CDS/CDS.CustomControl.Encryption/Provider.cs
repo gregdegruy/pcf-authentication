@@ -101,7 +101,6 @@ namespace CDS.CustomControl.Encryption
                     {
                         var responseText = streamReader.ReadToEnd();
                         azFuncResponse = responseText;
-                        passThroughOnlyTracingService.Trace("User token: " + responseText);
                     }
                 }
                 catch (WebException ex)
@@ -112,10 +111,6 @@ namespace CDS.CustomControl.Encryption
             }
 
             passThroughOnlyTracingService.Trace("Token " + azFuncResponse);
-
-            //var response = new HttpResponseMessage();
-            //response = await httpClient.PostAsync("api/cds/authentication/token", formUrlEncodedContent);
-            //response.EnsureSuccessStatusCode();
         }
     }
 }

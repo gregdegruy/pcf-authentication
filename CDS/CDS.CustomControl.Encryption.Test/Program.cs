@@ -21,7 +21,8 @@ namespace CDS.CustomControl.Encryption.Test
                 "fire", "cap");
             
             PowerApp powerApp = new PowerApp(environment);
-            powerApp.Fetch();
+            // powerApp.Fetch();
+            powerApp.UpdateSystemUser();
 
             // TestRestSharpLocally();
             // CallAzureFunction();

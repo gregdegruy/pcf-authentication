@@ -61,6 +61,24 @@ namespace CDS.CustomControl.Encryption.Test.Authentication
             SafeExecutor(action);
         }
 
+        public void UpdateSystemUser()
+        {
+            Action action = () =>
+            {
+                OrganizationServiceProxy _serviceProxy;
+
+                using (_serviceProxy = PowerAppServerConnection.GetOrganizationProxy(config))
+                {
+                    string userId = "98763981-12b8-44c5-a98c-1c1e392f56cf";
+                    var cols = new ColumnSet(new String[] { "systemuserid", "internalemailaddress", "seismic_cc_token" });
+                    Entity systemUser = _serviceProxy.Retrieve("systemuser", new Guid(userId), cols);
+                    systemUser["seismic_cc_token"] = "87evfrw78vt3398983098v390309309";
+                    _serviceProxy.Update(systemUser);
+                }
+            };
+            SafeExecutor(action);
+        }
+
         public void GetSolutions()
         {
             Action action = () =>
