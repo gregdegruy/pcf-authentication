@@ -169,32 +169,47 @@ export class PredictiveContent extends React.Component<{}, ITextFieldControlledE
         const predictiveContentId = "Flow"; // case matters!
         const contextId = "optional";
 
-        debugger;
-
-        let options = {
-            "method": "GET",
-            "hostname": env.api.toString(),
-            "path": "/predictiveContent/" + predictiveContentId + '/' + contextId,
-            "headers": {
-                "authorization": "Bearer " + this.openId.bearerToken
-            }
-        };
+        let userPromise = new Promise((resolve, reject) => {                        		
+            var token = "";
+            var userSettings = Xrm.Utility.getGlobalContext().userSettings;
+            Xrm.WebApi.retrieveRecord("systemuser", userSettings.userId.slice(1,-1), "?$select=seismic_cc_token").then(
+                function success(result: any) {
+                    console.log("Retrieved token: " + result.seismic_cc_token);
+                    token = result.seismic_cc_token;
+                    resolve(token);
+                },
+                function (error: any) {
+                    console.log(error.message);
+                }
+            );
+        });
+                
         let contentPromise = new Promise((resolve, reject) => {                          		
-            let req = https.request(options, function (response) {
-                var data = "";
-                response.on("data", function (chunk) {
-                    data += chunk;
+            userPromise.then((token: any) => {
+                let options = {
+                    "method": "GET",
+                    "hostname": env.api.toString(),
+                    "path": "/predictiveContent/" + predictiveContentId + '/' + contextId,
+                    "headers": {
+                        "authorization": "Bearer " + token // this.openId.bearerToken
+                    }
+                };
+                let req = https.request(options, function (response) {
+                    var data = "";
+                    response.on("data", function (chunk) {
+                        data += chunk;
+                    });		  
+                    response.on("end", function () {								
+                        let formattedData = JSON.parse(data);
+                        resolve(formattedData);
+                    });		  
+                    response.on("error", function (error) {
+                        console.error(error);
+                        reject();
+                    });
                 });		  
-                response.on("end", function () {								
-                    let formattedData = JSON.parse(data);
-                    resolve(formattedData);
-                });		  
-                response.on("error", function (error) {
-                    console.error(error);
-                    reject();
-                });
-            });		  
-            req.end();
+                req.end();
+            })            
         }); 		
         contentPromise.then((formattedData: any) => {
             var predictiveContent: any[] = [];
