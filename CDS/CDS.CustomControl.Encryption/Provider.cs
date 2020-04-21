@@ -72,21 +72,25 @@ namespace CDS.CustomControl.Encryption
                 passThroughOnlyTracingService.Trace("Username " + loginCredentials["username"]);
                 passThroughOnlyTracingService.Trace("Password " + loginCredentials["password"]);
 
+                Entity configuration = cdsDataAccessLayer.RetrieveConfiguration();
+                passThroughOnlyTracingService.Trace("Got config");
+                passThroughOnlyTracingService.Trace("client id " + configuration.Attributes["seismic_cc_clientid"]);
+                passThroughOnlyTracingService.Trace("client secret " + configuration.Attributes["seismic_cc_clientsecret"]);
+
                 var httpWebRequest = (HttpWebRequest)WebRequest.Create(azureFunctionUrl);
                 httpWebRequest.ContentType = "application/json; charset=utf-8";
                 httpWebRequest.Method = "POST";
                 string json = "";
                 using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
                 {
-                    //json =
-                    //'{' +
-                    //    "\"client_id\" : \"" + AppConfig.CLIENT_ID + "\"," +
-                    //    "\"client_secret\" : \"" + AppConfig.CLIENT_SECRET + "\"," +
-                    //    "\"username\" : \"" + loginCredentials["username"] + "\"," +
-                    //    "\"password\" : \"" + loginCredentials["password"] + "\"" +
-                    //'}';
+                    json =
+                    '{' +
+                        "\"client_id\" : \"" + configuration.Attributes["seismic_cc_clientid"] + "\"," +
+                        "\"client_secret\" : \"" + configuration.Attributes["seismic_cc_clientsecret"] + "\"," +
+                        "\"username\" : \"" + loginCredentials["username"] + "\"," +
+                        "\"password\" : \"" + loginCredentials["password"] + "\"" +
+                    '}';
 
-                    json = "";
                     streamWriter.Write(json);
                     streamWriter.Flush();
                 }
@@ -97,7 +101,7 @@ namespace CDS.CustomControl.Encryption
                     {
                         var responseText = streamReader.ReadToEnd();
                         azFuncResponse = responseText;
-                        Console.WriteLine(responseText);
+                        passThroughOnlyTracingService.Trace("User token: " + responseText);
                     }
                 }
                 catch (WebException ex)

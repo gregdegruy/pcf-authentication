@@ -54,6 +54,8 @@ namespace CDS.CustomControl.Encryption.Test.Authentication
                           "</fetch>"; ;
 
                     Entity entity = _advancedFind.Fetch(xml, _serviceProxy);
+                    var seismic_cc_clientid = entity.Attributes["seismic_cc_clientid"];
+                    var seismic_cc_secret = entity.Attributes["seismic_cc_clientsecret"];
                 }
             };
             SafeExecutor(action);

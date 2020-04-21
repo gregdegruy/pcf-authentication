@@ -57,7 +57,7 @@ namespace CDS.CustomControl.Encryption
             return new Dictionary<string, string>() { { "", "" } };
         }
 
-        private Entity RetrieveConfiguration(IOrganizationService service, Guid userId)
+        public Entity RetrieveConfiguration()
         {
             var xml = "<fetch distinct='false' version='1.0' output-format='xml-platform' mapping='logical' no-lock='true'>" +
                             "<entity name='seismic_cc_configuration'>" +
@@ -66,21 +66,21 @@ namespace CDS.CustomControl.Encryption
                                 "<attribute name='seismic_cc_clientid' />" +
                                 "<attribute name='seismic_cc_clientsecret' />" +
                                 "<filter type='and'>" +
-                                    "<condition attribute='ownerid' operator='eq' uiname='Greg Degruy' uitype='systemuser' value='{" + userId.ToString() + "}' />" +
+                                    "<condition attribute='ownerid' operator='eq' uiname='Greg Degruy' uitype='systemuser' value='{" + executionContext.InitiatingUserId.ToString() + "}' />" +
                                 "</filter>" +
                             "</entity>" +
                           "</fetch>"; ;
 
-            Entity systemUser = _advancedFind.Fetch(xml, service);
+            Entity configuration = _advancedFind.Fetch(xml, this.organizationService);
 
-            if (systemUser != null)
+            if (configuration != null)
             {
-                return systemUser;
+                return configuration;
             }
             else { return null; }
         }
 
-        private Entity RetrieveSystemUser(IOrganizationService service, Guid userId)
+        public Entity RetrieveSystemUser(IOrganizationService service, Guid userId)
         {
             var xml = "<fetch distinct='false' version='1.0' output-format='xml-platform' mapping='logical' no-lock='true'>" +
                             "<entity name='systemuser'>" +
