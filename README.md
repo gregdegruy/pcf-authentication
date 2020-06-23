@@ -5,6 +5,8 @@
 
 # Power Apps Component Framework Authentication
 
+[App package size workaround](https://github.com/MicrosoftDocs/powerapps-docs/issues/1129#event-3115417141)
+
 Run with `msbuild /t:restore` on Visual Studio cmd line. [Import the into the CDS SQL Database](https://docs.microsoft.com/en-us/powerapps/developer/component-framework/use-sample-components) from the UI or using a script. Located in `bin\debug`.
 
 Uses [Office UI Fabric](https://developer.microsoft.com/en-us/fabric#/get-started) styles and controls.
